@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>重庆大学小青🐟人格测评</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+        
+        body {
+            background-color: #FFF9F2;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        /* 卡片容器 */
+        .container {
+            width: 100%;
+            max-width: 700px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 140, 56, 0.1);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* 页面通用样式 */
+        .section {
+            padding: 40px;
+            display: none;
+        }
+        
+        .active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 标题样式 */
+        h1 {
+            color: #FF8C38;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        
+        h2 {
+            color: #FF8C38;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        
+        h3 {
+            color: #555;
+            margin-bottom: 25px;
+            font-size: 18px;
+            font-weight: normal;
+            text-align: center;
+        }
+        
+        /* 按钮样式 */
+        .btn {
+            background-color: #FF8C38;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+        }
+        
+        .btn:hover {
+            background-color: #FF7A18;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 122, 24, 0.3);
+        }
+        
+        .btn:disabled {
+            background-color: #FFD28F;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        /* 题目样式 */
+        .question {
+            font-size: 20px;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .option {
+            padding: 15px 20px;
+            border: 2px solid #FFD28F;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .option:hover {
+            background-color: #FFF5EB;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 140, 56, 0.1);
+        }
+        
+        .option.selected {
+            background-color: #FF8C38;
+            color: white;
+            border-color: #FF8C38;
+        }
+        
+        .option.selected::after {
+            content: "✓";
+            position: absolute;
+            right: 20px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .progress {
+            height: 8px;
+            background-color: #FFE8D2;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: #FF8C38;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            background: linear-gradient(90deg, #FF8C38, #FFA563);
+        }
+        
+        /* 表单样式 */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #FFD28F;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        
+        input[type="text"]:focus, input[type="number"]:focus {
+            outline: none;
+            border-color: #FF8C38;
+            box-shadow: 0 0 0 3px rgba(255, 140, 56, 0.1);
+        }
+        
+        .checkbox-group, .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .checkbox-item, .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            border: 1px solid #FFD28F;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .checkbox-item input, .radio-item input {
+            width: 16px;
+            height: 16px;
+            margin: 0;
+            flex-shrink: 0;
+        }
+        
+        .checkbox-item label, .radio-item label {
+            margin: 0;
+            cursor: pointer;
+            line-height: 1.2;
+        }
+        
+        .checkbox-item:hover, .radio-item:hover {
+            background-color: #FFF5EB;
+            transform: translateY(-2px);
+        }
+        
+        input[type="checkbox"]:checked + label, 
+        input[type="radio"]:checked + label {
+            color: #FF8C38;
+            font-weight: bold;
+        }
+        
+        input[type="checkbox"]:checked, input[type="radio"]:checked {
+            accent-color: #FF8C38;
+        }
+        
+        /* 结果页样式 */
+        .result-header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .result-header::after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #FF8C38, transparent);
+            margin: 20px auto 0;
+        }
+        
+        .result-card {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #FFF5EB, #FFFAF2);
+            border-radius: 20px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(255, 140, 56, 0.1);
+        }
+        
+        .result-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #FF8C38, #FFB067);
+        }
+        
+        .personality-type {
+            font-size: 24px;
+            color: #FF8C38;
+            font-weight: bold;
+            margin: 15px 0;
+            letter-spacing: 1px;
+        }
+        
+        .personality-name {
+            font-size: 26px;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .personality-desc {
+            color: #666;
+            line-height: 1.8;
+            font-size: 16px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .info-card {
+            background-color: #FFF9F2;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 4px solid #FF8C38;
+        }
+        
+        .info-card h2 {
+            margin-bottom: 15px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-card h2::before {
+            content: "📝";
+            font-size: 20px;
+        }
+        
+        .info-list {
+            list-style: none;
+            text-align: left;
+            margin: 0;
+            padding-left: 0;
+        }
+        
+        .info-list li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 25px;
+            font-size: 15px;
+        }
+        
+        .info-list li:before {
+            content: "•";
+            color: #FF8C38;
+            font-weight: bold;
+            position: absolute;
+            left: 10px;
+            font-size: 20px;
+        }
+        
+        .result-footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #FFE8D2;
+        }
+        
+        /* 错误提示样式 */
+        .error-message {
+            color: #FF4444;
+            text-align: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #FFF0F0;
+            border-radius: 8px;
+            display: none;
+            border: 1px solid #FFCCCC;
+        }
+        
+        .error-message.show {
+            display: block;
+            animation: shake 0.5s ease;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        /* 题目页提示 */
+        .question-error {
+            color: #FF4444;
+            text-align: center;
+            margin: 10px 0;
+            display: none;
+        }
+        
+        .question-error.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 欢迎页 -->
+        <div id="welcome-section" class="section active">
+            <h1>重庆大学小青🐟人格测评</h1>
+            <h3>探索你的志愿服务特质，找到属于你的志愿者人格</h3>
+            <div style="text-align: center; margin-top: 50px;">
+                <button id="start-btn" class="btn">开始测评</button>
+            </div>
+        </div>
+
+        <!-- 题目页 -->
+        <div id="question-section" class="section">
+            <div class="progress">
+                <div id="progress-bar" class="progress-bar" style="width: 8%;"></div>
+            </div>
+            <div id="question-number"></div>
+            <div id="question-text" class="question"></div>
+            
+            <!-- 题目错误提示 -->
+            <div id="question-error" class="question-error">请选择一个选项后继续！</div>
+            
+            <div id="options-container" class="options"></div>
+            <div class="btn-group">
+                <button id="prev-btn" class="btn" disabled>上一题</button>
+                <button id="next-btn" class="btn">下一题</button>
+            </div>
+        </div>
+
+        <!-- 成就展望页 -->
+        <div id="achievement-section" class="section">
+            <h2>成就与展望</h2>
+            
+            <!-- 错误提示 -->
+            <div id="error-message" class="error-message"></div>
+            
+            <div class="form-group">
+                <label for="total-hours">累计志愿服务时长（小时）</label>
+                <input type="number" id="total-hours" placeholder="请输入时长" min="0">
+            </div>
+            
+            <div class="form-group">
+                <label for="start-year">开始志愿服务的年份</label>
+                <input type="number" id="start-year" placeholder="例如：2022" min="2016">
+            </div>
+            
+            <div class="form-group">
+                <label>志愿带给你的改变（可多选）</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="change1" name="change" value="认识了新朋友">
+                        <label for="change1">认识了新朋友</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="change2" name="change" value="学会了新技能">
+                        <label for="change2">学会了新技能</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="change3" name="change" value="更理解社会问题">
+                        <label for="change3">更理解社会问题</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="change4" name="change" value="提升了沟通能力">
+                        <label for="change4">提升了沟通能力</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="change5" name="change" value="增强了责任感">
+                        <label for="change5">增强了责任感</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>明年最想尝试的服务类型</label>
+                <div class="radio-group">
+                    <div class="radio-item">
+                        <input type="radio" id="type1" name="next-type" value="爱心助老">
+                        <label for="type1">爱心助老</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="type2" name="next-type" value="支教助学">
+                        <label for="type2">支教助学</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="type3" name="next-type" value="赛事服务">
+                        <label for="type3">赛事服务</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="type4" name="next-type" value="环保公益">
+                        <label for="type4">环保公益</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="type5" name="next-type" value="社区服务">
+                        <label for="type5">社区服务</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>用一个词形容你的志愿服务</label>
+                <div class="radio-group">
+                    <div class="radio-item">
+                        <input type="radio" id="desc1" name="description" value="温暖">
+                        <label for="desc1">温暖</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="desc2" name="description" value="成长">
+                        <label for="desc2">成长</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="desc3" name="description" value="责任">
+                        <label for="desc3">责任</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="desc4" name="description" value="快乐">
+                        <label for="desc4">快乐</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="desc5" name="description" value="价值">
+                        <label for="desc5">价值</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="btn-group" style="justify-content: center;">
+                <button id="submit-btn" class="btn">查看结果</button>
+            </div>
+        </div>
+
+        <!-- 结果页 -->
+        <div id="result-section" class="section">
+            <div class="result-header">
+                <h1>你的志愿者人格</h1>
+            </div>
+            
+            <div class="result-card">
+                <div id="result-type" class="personality-type"></div>
+                <div id="result-name" class="personality-name"></div>
+                <div id="result-desc" class="personality-desc"></div>
+            </div>
+            
+            <div class="info-card">
+                <h2>你的志愿档案</h2>
+                <ul id="info-summary" class="info-list"></ul>
+            </div>
+            
+            <div class="result-footer">
+                <p style="color: #777; margin-bottom: 20px;">感谢参与重庆大学青年志愿者人格测评</p>
+                <button id="restart-btn" class="btn">重新测评</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 题目数据
+        const questions = [
+            {
+                text: "选择志愿服务时，你更看重？",
+                options: [
+                    { text: "能真正帮助到他人，带来情感慰藉", dimension: "H" },
+                    { text: "能发挥专业特长，创造实际价值", dimension: "S" }
+                ]
+            },
+            {
+                text: "在团队中，你更倾向于？",
+                options: [
+                    { text: "主动策划组织，带领大家行动", dimension: "L" },
+                    { text: "配合团队安排，认真完成分配任务", dimension: "T" }
+                ]
+            },
+            {
+                text: "你更喜欢哪种服务场景？",
+                options: [
+                    { text: "固定的服务点，熟悉的服务对象", dimension: "A" },
+                    { text: "不同的新项目，多样的服务体验", dimension: "E" }
+                ]
+            },
+            {
+                text: "服务中你更关注？",
+                options: [
+                    { text: "服务对象的感受和个性化需求", dimension: "C" },
+                    { text: "任务目标的完成效率和质量", dimension: "X" }
+                ]
+            },
+            {
+                text: "报名志愿活动时，你会优先选择？",
+                options: [
+                    { text: "情感支持类（如陪伴老人、心理疏导）", dimension: "H" },
+                    { text: "专业技能类（如技术支持、设计宣传）", dimension: "S" }
+                ]
+            },
+            {
+                text: "遇到团队分歧时，你通常会？",
+                options: [
+                    { text: "主动协调各方，提出解决方案", dimension: "L" },
+                    { text: "尊重团队决定，做好自己的部分", dimension: "T" }
+                ]
+            },
+            {
+                text: "对于长期服务项目，你的态度是？",
+                options: [
+                    { text: "愿意坚持做下去，深入了解服务对象", dimension: "A" },
+                    { text: "体验一段时间后想尝试其他项目", dimension: "E" }
+                ]
+            },
+            {
+                text: "服务过程中，你会？",
+                options: [
+                    { text: "花时间倾听交流，建立情感连接", dimension: "C" },
+                    { text: "高效完成任务，确保流程顺畅", dimension: "X" }
+                ]
+            },
+            {
+                text: "让你最有成就感的是？",
+                options: [
+                    { text: "看到服务对象真心的笑容和感谢", dimension: "H" },
+                    { text: "用专业能力解决了实际问题", dimension: "S" }
+                ]
+            },
+            {
+                text: "组织志愿活动时，你更擅长？",
+                options: [
+                    { text: "统筹规划，分配角色和任务", dimension: "L" },
+                    { text: "执行具体工作，保障细节落实", dimension: "T" }
+                ]
+            },
+            {
+                text: "你希望志愿服务能让你？",
+                options: [
+                    { text: "深耕某一领域，成为专家型志愿者", dimension: "A" },
+                    { text: "接触不同领域，拓宽志愿服务视野", dimension: "E" }
+                ]
+            },
+            {
+                text: "你的服务风格更接近？",
+                options: [
+                    { text: "细致入微，关注每个人的需求", dimension: "C" },
+                    { text: "目标导向，确保高效完成任务", dimension: "X" }
+                ]
+            }
+        ];
+
+        // 人格类型数据
+        const personalities = {
+            "H-L-A-C": { name: "温情守护小青鱼", desc: "内心驱动，作为引领者，在稳定领域提供充满关怀的长期守护。" },
+            "H-L-A-X": { name: "坚实后盾小青鱼", desc: "内心驱动，作为引领者，在稳定领域像执行人一样高效可靠。" },
+            "H-T-A-C": { name: "温暖陪伴小青鱼", desc: "内心驱动，作为队友，在稳定领域提供细致而长情的陪伴。" },
+            "H-T-A-X": { name: "静默耕耘小青鱼", desc: "内心驱动，作为队友，在稳定领域默默高效地完成所有任务。" },
+            "H-L-E-C": { name: "爱心传递小青鱼", desc: "内心驱动，作为引领者，在探索中向各处播撒关怀与温暖。" },
+            "H-L-E-X": { name: "热血先锋小青鱼", desc: "内心驱动，作为引领者，在探索中像执行人一样高效开拓。" },
+            "H-T-E-C": { name: "暖心旅人小青鱼", desc: "内心驱动，作为队友，在探索中带着关怀留下温暖的印记。" },
+            "H-T-E-X": { name: "快乐行动派小青鱼", desc: "内心驱动，作为队友，在探索中高效执行，传递快乐能量。" },
+            "S-L-A-C": { name: "专业园丁小青鱼", desc: "技能驱动，作为引领者，在稳定领域用专业技艺悉心培育。" },
+            "S-L-A-X": { name: "架构师小青鱼", desc: "技能驱动，作为引领者，在稳定领域像执行人一样构建高效体系。" },
+            "S-T-A-C": { name: "匠心专员小青鱼", desc: "技能驱动，作为队友，在稳定领域用专业和关怀追求极致。" },
+            "S-T-A-X": { name: "效能专家小青鱼", desc: "技能驱动，作为队友，在稳定领域专业、高效地优化流程。" },
+            "S-L-E-C": { name: "启迪导师小青鱼", desc: "技能驱动，作为引领者，在探索中用专业知识和关怀启迪他人。" },
+            "S-L-E-X": { name: "战略专家小青鱼", desc: "技能驱动，作为引领者，在探索中像执行人一样制定专业方案。" },
+            "S-T-E-C": { name: "博学助手小青鱼", desc: "技能驱动，作为队友，在探索中用专业知识和关怀支持各方。" },
+            "S-T-E-X": { name: "万能胶小青鱼", desc: "技能驱动，作为队友，在探索中灵活执行，填补各种专业空缺。" }
+        };
+
+        // 全局变量
+        let currentQuestion = 0;
+        let selectedOptions = {};
+        let personalityResult = "";
+
+        // DOM元素
+        const welcomeSection = document.getElementById("welcome-section");
+        const questionSection = document.getElementById("question-section");
+        const achievementSection = document.getElementById("achievement-section");
+        const resultSection = document.getElementById("result-section");
+        
+        const startBtn = document.getElementById("start-btn");
+        const prevBtn = document.getElementById("prev-btn");
+        const nextBtn = document.getElementById("next-btn");
+        const submitBtn = document.getElementById("submit-btn");
+        const restartBtn = document.getElementById("restart-btn");
+        
+        const questionNumber = document.getElementById("question-number");
+        const questionText = document.getElementById("question-text");
+        const optionsContainer = document.getElementById("options-container");
+        const progressBar = document.getElementById("progress-bar");
+        const questionError = document.getElementById("question-error");
+        
+        const resultType = document.getElementById("result-type");
+        const resultName = document.getElementById("result-name");
+        const resultDesc = document.getElementById("result-desc");
+        const infoSummary = document.getElementById("info-summary");
+        
+        const errorMessage = document.getElementById("error-message");
+        const totalHoursInput = document.getElementById("total-hours");
+        const startYearInput = document.getElementById("start-year");
+
+        // 初始化题目
+        function initQuestion() {
+            // 隐藏错误提示
+            questionError.classList.remove("show");
+            
+            const question = questions[currentQuestion];
+            questionNumber.textContent = `问题 ${currentQuestion + 1}/${questions.length}`;
+            questionText.textContent = question.text;
+            
+            // 清空选项容器
+            optionsContainer.innerHTML = "";
+            
+            // 创建选项
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement("div");
+                optionElement.className = `option ${selectedOptions[currentQuestion] === index ? "selected" : ""}`;
+                optionElement.textContent = option.text;
+                optionElement.dataset.index = index;
+                
+                optionElement.addEventListener("click", () => {
+                    // 移除其他选项的选中状态
+                    document.querySelectorAll(".option").forEach(el => el.classList.remove("selected"));
+                    // 添加当前选项的选中状态
+                    optionElement.classList.add("selected");
+                    // 保存选择
+                    selectedOptions[currentQuestion] = index;
+                    // 隐藏错误提示
+                    questionError.classList.remove("show");
+                });
+                
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // 更新进度条
+            progressBar.style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
+            
+            // 更新按钮状态
+            prevBtn.disabled = currentQuestion === 0;
+            nextBtn.textContent = currentQuestion === questions.length - 1 ? "下一步" : "下一题";
+        }
+
+        // 计算人格类型
+        function calculatePersonality() {
+            const scores = { H: 0, S: 0, L: 0, T: 0, A: 0, E: 0, C: 0, X: 0 };
+            
+            // 统计各维度得分
+            for (let i = 0; i < questions.length; i++) {
+                const selectedIndex = selectedOptions[i];
+                const dimension = questions[i].options[selectedIndex].dimension;
+                scores[dimension]++;
+            }
+            
+            // 确定每个维度的倾向
+            const dim1 = scores.H >= scores.S ? "H" : "S";
+            const dim2 = scores.L >= scores.T ? "L" : "T";
+            const dim3 = scores.A >= scores.E ? "A" : "E";
+            const dim4 = scores.C >= scores.X ? "C" : "X";
+            
+            return dim1 + "-" + dim2 + "-" + dim3 + "-" + dim4;
+        }
+
+        // 表单验证
+        function validateForm() {
+            const hours = totalHoursInput.value.trim();
+            const year = startYearInput.value.trim();
+            const changes = document.querySelectorAll('input[name="change"]:checked');
+            const nextType = document.querySelector('input[name="next-type"]:checked');
+            const description = document.querySelector('input[name="description"]:checked');
+            
+            // 清空之前的错误提示
+            errorMessage.classList.remove("show");
+            
+            // 验证累计时长
+            if (!hours) {
+                showError("请填写累计志愿服务时长");
+                return false;
+            }
+            if (parseInt(hours) < 0) {
+                showError("累计志愿服务时长不能为负数");
+                return false;
+            }
+            
+            // 验证开始年份
+            if (!year) {
+                showError("请填写开始志愿服务的年份");
+                return false;
+            }
+            if (parseInt(year) < 2000) {
+                showError("开始志愿服务的年份不能早于2000年");
+                return false;
+            }
+            
+            // 验证志愿带来的改变
+            if (changes.length === 0) {
+                showError("请选择至少一项志愿带给你的改变");
+                return false;
+            }
+            
+            // 验证明年想尝试的服务类型
+            if (!nextType) {
+                showError("请选择明年最想尝试的服务类型");
+                return false;
+            }
+            
+            // 验证形容志愿服务的词汇
+            if (!description) {
+                showError("请选择一个词形容你的志愿服务");
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // 显示错误信息
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.add("show");
+            
+            // 3秒后自动隐藏错误提示
+            setTimeout(() => {
+                errorMessage.classList.remove("show");
+            }, 3000);
+        }
+
+        // 获取表单数据
+        function getFormData() {
+            const hours = totalHoursInput.value;
+            const year = startYearInput.value;
+            
+            // 获取多选值
+            const changes = [];
+            document.querySelectorAll('input[name="change"]:checked').forEach(el => {
+                changes.push(el.value);
+            });
+            
+            // 获取单选值
+            const nextType = document.querySelector('input[name="next-type"]:checked').value;
+            const description = document.querySelector('input[name="description"]:checked').value;
+            
+            return { hours, year, changes, nextType, description };
+        }
+
+        // 显示结果
+        function showResult() {
+            const formData = getFormData();
+            const personality = personalities[personalityResult];
+            
+            // 设置人格结果
+            resultType.textContent = personalityResult;
+            resultName.textContent = personality.name;
+            resultDesc.textContent = personality.desc;
+            
+            // 设置信息总结
+            infoSummary.innerHTML = `
+                <li>累计服务时长：${formData.hours}小时</li>
+                <li>开始志愿年份：${formData.year}年</li>
+                <li>志愿带来的改变：${formData.changes.join("、")}</li>
+                <li>明年想尝试：${formData.nextType}</li>
+                <li>志愿服务关键词：${formData.description}</li>
+            `;
+        }
+
+        // 事件监听
+        startBtn.addEventListener("click", () => {
+            welcomeSection.classList.remove("active");
+            questionSection.classList.add("active");
+            initQuestion();
+        });
+
+        prevBtn.addEventListener("click", () => {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                initQuestion();
+            }
+        });
+
+        nextBtn.addEventListener("click", () => {
+            // 检查是否选择了选项
+            if (!selectedOptions.hasOwnProperty(currentQuestion)) {
+                questionError.classList.add("show");
+                // 轻微震动效果
+                optionsContainer.style.animation = "shake 0.5s ease";
+                setTimeout(() => {
+                    optionsContainer.style.animation = "";
+                }, 500);
+                return;
+            }
+            
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                initQuestion();
+            } else {
+                // 计算人格类型
+                personalityResult = calculatePersonality();
+                // 跳转到成就页
+                questionSection.classList.remove("active");
+                achievementSection.classList.add("active");
+            }
+        });
+
+        submitBtn.addEventListener("click", () => {
+            // 表单验证
+            if (!validateForm()) {
+                return;
+            }
+            
+            // 显示结果页
+            achievementSection.classList.remove("active");
+            resultSection.classList.add("active");
+            showResult();
+        });
+
+        restartBtn.addEventListener("click", () => {
+            // 重置状态
+            currentQuestion = 0;
+            selectedOptions = {};
+            personalityResult = "";
+            
+            // 重置表单
+            totalHoursInput.value = "";
+            startYearInput.value = "";
+            document.querySelectorAll('input[type="checkbox"], input[type="radio"]').forEach(el => {
+                el.checked = false;
+            });
+            
+            // 隐藏错误提示
+            errorMessage.classList.remove("show");
+            questionError.classList.remove("show");
+            
+            // 返回欢迎页
+            resultSection.classList.remove("active");
+            welcomeSection.classList.add("active");
+        });
+    </script>
+</body>
+</html>
