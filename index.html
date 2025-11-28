@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>重庆大学小青🐟人格测评</title>
+    <!-- 引入 dom-to-image 库（CDN） -->
+    <script src="https://cdn.jsdelivr.net/npm/dom-to-image@2.6.0/dist/dom-to-image.min.js"></script>
     <style>
         /* 全局样式 */
         * {
@@ -22,6 +24,8 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            background-image: radial-gradient(#FF8C3810 1px, transparent 1px);
+            background-size: 20px 20px;
         }
         
         /* 卡片容器 */
@@ -49,6 +53,72 @@
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 欢迎页优化样式 */
+        .welcome-container {
+            text-align: center;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 500px;
+        }
+        
+        .welcome-icon {
+            font-size: 80px;
+            margin-bottom: 30px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        .welcome-title {
+            font-size: 32px;
+            color: #FF8C38;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #FF8C38, #FFB067);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .welcome-subtitle {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 40px;
+            max-width: 500px;
+            line-height: 1.8;
+        }
+        
+        .welcome-features {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .welcome-feature {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            max-width: 120px;
+        }
+        
+        .feature-icon {
+            font-size: 30px;
+            color: #FF8C38;
+        }
+        
+        .feature-text {
+            font-size: 14px;
+            color: #666;
         }
         
         /* 标题样式 */
@@ -103,6 +173,16 @@
             display: flex;
             justify-content: space-between;
             margin-top: 30px;
+        }
+        
+        /* 下载按钮特殊样式 */
+        .download-btn {
+            background-color: #4CAF50;
+        }
+        
+        .download-btn:hover {
+            background-color: #45a049;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
         }
         
         /* 题目样式 */
@@ -256,10 +336,10 @@
         
         .result-card {
             text-align: center;
-            padding: 30px;
+            padding: 40px 30px;
             background: linear-gradient(135deg, #FFF5EB, #FFFAF2);
             border-radius: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             position: relative;
             overflow: hidden;
             box-shadow: 0 10px 25px rgba(255, 140, 56, 0.1);
@@ -284,7 +364,7 @@
         }
         
         .personality-name {
-            font-size: 26px;
+            font-size: 28px;
             margin-bottom: 20px;
             color: #333;
             font-weight: 600;
@@ -301,14 +381,15 @@
         .info-card {
             background-color: #FFF9F2;
             border-radius: 15px;
-            padding: 25px;
+            padding: 30px;
             margin-bottom: 20px;
             border-left: 4px solid #FF8C38;
+            box-shadow: 0 5px 15px rgba(255, 140, 56, 0.08);
         }
         
         .info-card h2 {
-            margin-bottom: 15px;
-            font-size: 20px;
+            margin-bottom: 20px;
+            font-size: 22px;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -323,23 +404,26 @@
             list-style: none;
             text-align: left;
             margin: 0;
-            padding-left: 0;
+            padding-left: 20px;
+            line-height: 1.8;
         }
         
-        .info-list li {
-            margin-bottom: 12px;
-            position: relative;
-            padding-left: 25px;
+        /* 四维简介样式优化 */
+        #dimension-summary li {
+            margin-bottom: 18px;
             font-size: 15px;
+            position: relative;
         }
         
-        .info-list li:before {
-            content: "•";
+        #dimension-summary li strong {
             color: #FF8C38;
-            font-weight: bold;
-            position: absolute;
-            left: 10px;
-            font-size: 20px;
+            font-size: 16px;
+        }
+        
+        #dimension-summary li li {
+            margin-bottom: 10px;
+            padding-left: 5px;
+            color: #555;
         }
         
         .result-footer {
@@ -384,23 +468,125 @@
             display: block;
             animation: fadeIn 0.3s ease;
         }
+        
+        /* 信件页面样式 */
+        .letter-content {
+            line-height: 1.8;
+            font-size: 16px;
+            padding: 30px;
+            background: linear-gradient(135deg, #FFF5EB, #FFFAF2);
+            border-radius: 15px;
+            min-height: 400px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(255, 140, 56, 0.08);
+            white-space: pre-line;
+            color: #333; /* 确保文字颜色 */
+            cursor: pointer; /* 添加鼠标指针样式 */
+        }
+        
+        .letter-content strong {
+            color: #FF8C38;
+        }
+        
+        /* 高亮文本样式 */
+        .highlight-text {
+            font-weight: bold;
+            color: #FF8C38;
+        }
+        
+        .signature {
+            text-align: right;
+            margin-top: 30px;
+        }
+        
+        .typing::after {
+            content: "|";
+            animation: blink 1s infinite;
+            color: #FF8C38;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        /* 截图专用样式 - 确保背景和文字清晰 */
+        .screenshot-target {
+            background-color: white !important;
+            color: #333 !important;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+        
+        /* 加载提示样式 */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            display: none;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #FFE8D2;
+            border-top: 5px solid #FF8C38;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            font-size: 18px;
+            color: #FF8C38;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- 欢迎页 -->
+        <!-- 欢迎页（优化版） -->
         <div id="welcome-section" class="section active">
-            <h1>重庆大学小青🐟人格测评</h1>
-            <h3>探索你的志愿服务特质，找到属于你的志愿者人格</h3>
-            <div style="text-align: center; margin-top: 50px;">
-                <button id="start-btn" class="btn">开始测评</button>
+            <div class="welcome-container">
+                <div class="welcome-icon">🐟</div>
+                <h1 class="welcome-title">重庆大学小青🐟人格测评</h1>
+                <p class="welcome-subtitle">探索你的志愿服务特质，找到属于你的志愿者人格，让每一份善意都闪闪发光</p>
+                
+                <div class="welcome-features">
+                    <div class="welcome-feature">
+                        <div class="feature-icon">🧭</div>
+                        <div class="feature-text">精准测评</div>
+                    </div>
+                    <div class="welcome-feature">
+                        <div class="feature-icon">💡</div>
+                        <div class="feature-text">个性分析</div>
+                    </div>
+                    <div class="welcome-feature">
+                        <div class="feature-icon">✉️</div>
+                        <div class="feature-text">专属信件</div>
+                    </div>
+                </div>
+                
+                <button id="start-btn" class="btn" style="padding: 15px 40px; font-size: 18px;">开始测评</button>
             </div>
         </div>
 
         <!-- 题目页 -->
         <div id="question-section" class="section">
             <div class="progress">
-                <div id="progress-bar" class="progress-bar" style="width: 8%;"></div>
+                <div id="progress-bar" class="progress-bar" style="width: 10%;"></div>
             </div>
             <div id="question-number"></div>
             <div id="question-text" class="question"></div>
@@ -423,13 +609,18 @@
             <div id="error-message" class="error-message"></div>
             
             <div class="form-group">
+                <label for="nickname">志愿者昵称</label>
+                <input type="text" id="nickname" placeholder="请输入你的昵称" required>
+            </div>
+            
+            <div class="form-group">
                 <label for="total-hours">累计志愿服务时长（小时）</label>
                 <input type="number" id="total-hours" placeholder="请输入时长" min="0">
             </div>
             
             <div class="form-group">
                 <label for="start-year">开始志愿服务的年份</label>
-                <input type="number" id="start-year" placeholder="例如：2022" min="2016">
+                <input type="number" id="start-year" placeholder="例如：2022" min="2000" max="2026">
             </div>
             
             <div class="form-group">
@@ -515,8 +706,8 @@
             </div>
         </div>
 
-        <!-- 结果页 -->
-        <div id="result-section" class="section">
+        <!-- 总结页（移除志愿档案） -->
+        <div id="result-section" class="section screenshot-target">
             <div class="result-header">
                 <h1>你的志愿者人格</h1>
             </div>
@@ -528,142 +719,178 @@
             </div>
             
             <div class="info-card">
-                <h2>你的志愿档案</h2>
-                <ul id="info-summary" class="info-list"></ul>
+                <h2>四维简介</h2>
+                <ul id="dimension-summary" class="info-list"></ul>
             </div>
             
             <div class="result-footer">
-                <p style="color: #777; margin-bottom: 20px;">感谢参与重庆大学青年志愿者人格测评</p>
-                <button id="restart-btn" class="btn">重新测评</button>
+                <!-- 添加下载按钮 -->
+                <button id="download-result-btn" class="btn download-btn">下载结果图片</button>
+                <button id="to-letter-btn" class="btn">致小青鱼的一封信</button>
             </div>
         </div>
+
+        <!-- 信件页 -->
+        <div id="letter-section" class="section screenshot-target">
+            <div class="result-header">
+                <h1>致小青鱼的一封信</h1>
+            </div>
+            <div class="letter-content" id="letter-content"></div>
+            <div class="btn-group" style="justify-content: center;">
+                <!-- 添加下载按钮 -->
+                <button id="download-letter-btn" class="btn download-btn">下载信件图片</button>
+                <button id="final-restart-btn" class="btn">重新测评</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 加载提示 -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="spinner"></div>
+        <div class="loading-text">正在生成图片，请稍候...</div>
     </div>
 
     <script>
         // 题目数据
         const questions = [
             {
-                text: "选择志愿服务时，你更看重？",
+                text: "到达志愿服务点后，你发现活动异常火爆，工作人员人手不足，需要人临时负责分发物资。此时负责人暂不在场，你会：",
                 options: [
-                    { text: "能真正帮助到他人，带来情感慰藉", dimension: "H" },
-                    { text: "能发挥专业特长，创造实际价值", dimension: "S" }
+                    { text: "A. 立即上前，主动梳理流程、组织队伍分发物资。", dimension: ["L", "X", "S"] },
+                    { text: "B. 先做力所能及的事，后续听从安排，被指派在哪里就在哪里帮忙。", dimension: ["T", "C", "H"] }
                 ]
             },
             {
-                text: "在团队中，你更倾向于？",
+                text: "由于精力有限，本学期以下两种志愿活动模式你只能选择一种。在所获志愿时长相等的情况下，你偏向于选择：",
                 options: [
-                    { text: "主动策划组织，带领大家行动", dimension: "L" },
-                    { text: "配合团队安排，认真完成分配任务", dimension: "T" }
+                    { text: "A. 选择长期稳定的志愿活动，如女生安心计划、蓝信封等。", dimension: ["A", "C", "H"] },
+                    { text: "B. 时刻关注青协志愿群与QQ频道，争取多样的志愿体验。", dimension: ["E", "X", "S"] }
                 ]
             },
             {
-                text: "你更喜欢哪种服务场景？",
+                text: "活动开展前，你们志愿小组需要写一个服务方案。在组内暂未确定分工时，你倾向于：",
                 options: [
-                    { text: "固定的服务点，熟悉的服务对象", dimension: "A" },
-                    { text: "不同的新项目，多样的服务体验", dimension: "E" }
+                    { text: "A. 主动提出框架、分工、推进时间表，从整体把握方向与任务。", dimension: ["L", "X", "S"] },
+                    { text: "B. 根据别人拟定的方案提供补充意见，细致完成实践内容。", dimension: ["T", "C", "H"] }
                 ]
             },
             {
-                text: "服务中你更关注？",
+                text: "由于时间冲突，以下两种志愿活动你只能选择一种进行体验，你更喜欢：",
                 options: [
-                    { text: "服务对象的感受和个性化需求", dimension: "C" },
-                    { text: "任务目标的完成效率和质量", dimension: "X" }
+                    { text: "A.志愿过程中需要持续提供服务，需求较为集中的志愿活动，如一对一陪伴读书、聊天、心理慰藉等。", dimension: ["A", "C", "H"] },
+                    { text: "B.志愿过程中节奏快，需求丰富多变的活动，如大型赛事志愿、展会志愿等。", dimension: ["E", "X", "S"] }
                 ]
             },
             {
-                text: "报名志愿活动时，你会优先选择？",
+                text: "当团队内部出现意见不统一，你通常会：",
                 options: [
-                    { text: "情感支持类（如陪伴老人、心理疏导）", dimension: "H" },
-                    { text: "专业技能类（如技术支持、设计宣传）", dimension: "S" }
+                    { text: "A. 先试图整合各方意见，提出一个大家都能接受的方案。", dimension: ["L", "C", "H"] },
+                    { text: "B. 参与讨论，尊重团队决策，明确目标后迅速执行自己负责的部分。", dimension: ["T", "X", "S"] }
                 ]
             },
             {
-                text: "遇到团队分歧时，你通常会？",
+                text: "在以下两项中，你更享受哪种志愿活动带给你的成就感？",
                 options: [
-                    { text: "主动协调各方，提出解决方案", dimension: "L" },
-                    { text: "尊重团队决定，做好自己的部分", dimension: "T" }
+                    { text: "A. 服务对象对你表达的信任与感谢，比如一句“谢谢你今天来，我特别温暖和高兴”。", dimension: ["H", "C", "A"] },
+                    { text: "B. 来自项目顺利完成、流程优化、解决了困难，如“因为你，团队工作效率提高了”。", dimension: ["S", "X", "E"] }
                 ]
             },
             {
-                text: "对于长期服务项目，你的态度是？",
+                text: "当一个新活动需要志愿者，你更可能因为哪种理由报名？",
                 options: [
-                    { text: "愿意坚持做下去，深入了解服务对象", dimension: "A" },
-                    { text: "体验一段时间后想尝试其他项目", dimension: "E" }
+                    { text: "A. 想帮助特定人群、因为“觉得他们需要你”。", dimension: ["H", "C"] },
+                    { text: "B. 想尝试新任务、提升技能，比如学习新的登记系统。", dimension: ["S", "X", "E"] }
                 ]
             },
             {
-                text: "服务过程中，你会？",
+                text: "如果你被安排到很需要耐心的志愿任务（如逐个安抚情绪紧张的家属），你的第一反应是：",
                 options: [
-                    { text: "花时间倾听交流，建立情感连接", dimension: "C" },
-                    { text: "高效完成任务，确保流程顺畅", dimension: "X" }
+                    { text: "A. 觉得有意义、有把握，愿意慢慢沟通，安抚并陪伴他们。", dimension: ["C", "H", "A"] },
+                    { text: "B. 更希望被安排到流程类、效率更重要的岗位，如登记、调度。", dimension: ["X", "S", "E"] }
                 ]
             },
             {
-                text: "让你最有成就感的是？",
+                text: "在志愿团队中，你最自然展现的状态是：",
                 options: [
-                    { text: "看到服务对象真心的笑容和感谢", dimension: "H" },
-                    { text: "用专业能力解决了实际问题", dimension: "S" }
+                    { text: "A. 主动关注队友情绪、关心是否有人需要帮助或协调。", dimension: ["C", "L", "H"] },
+                    { text: "B. 负责推动工作节奏，确保任务按时按量完成。", dimension: ["X", "S", "T"] }
                 ]
             },
             {
-                text: "组织志愿活动时，你更擅长？",
+                text: "当志愿项目需要选出一人长期负责联络及事务管理，你会：",
                 options: [
-                    { text: "统筹规划，分配角色和任务", dimension: "L" },
-                    { text: "执行具体工作，保障细节落实", dimension: "T" }
-                ]
-            },
-            {
-                text: "你希望志愿服务能让你？",
-                options: [
-                    { text: "深耕某一领域，成为专家型志愿者", dimension: "A" },
-                    { text: "接触不同领域，拓宽志愿服务视野", dimension: "E" }
-                ]
-            },
-            {
-                text: "你的服务风格更接近？",
-                options: [
-                    { text: "细致入微，关注每个人的需求", dimension: "C" },
-                    { text: "目标导向，确保高效完成任务", dimension: "X" }
+                    { text: "A. 愿意担任此类核心岗位，负责沟通协调和长期跟进。", dimension: ["L", "A", "H"] },
+                    { text: "B. 更希望按阶段参与项目，完成清晰的具体任务后继续探索下一个项目。", dimension: ["T", "E", "S", "X"] }
                 ]
             }
         ];
 
         // 人格类型数据
         const personalities = {
-            "H-L-A-C": { name: "温情守护小青鱼", desc: "内心驱动，作为引领者，在稳定领域提供充满关怀的长期守护。" },
-            "H-L-A-X": { name: "坚实后盾小青鱼", desc: "内心驱动，作为引领者，在稳定领域像执行人一样高效可靠。" },
-            "H-T-A-C": { name: "温暖陪伴小青鱼", desc: "内心驱动，作为队友，在稳定领域提供细致而长情的陪伴。" },
-            "H-T-A-X": { name: "静默耕耘小青鱼", desc: "内心驱动，作为队友，在稳定领域默默高效地完成所有任务。" },
-            "H-L-E-C": { name: "爱心传递小青鱼", desc: "内心驱动，作为引领者，在探索中向各处播撒关怀与温暖。" },
-            "H-L-E-X": { name: "热血先锋小青鱼", desc: "内心驱动，作为引领者，在探索中像执行人一样高效开拓。" },
-            "H-T-E-C": { name: "暖心旅人小青鱼", desc: "内心驱动，作为队友，在探索中带着关怀留下温暖的印记。" },
-            "H-T-E-X": { name: "快乐行动派小青鱼", desc: "内心驱动，作为队友，在探索中高效执行，传递快乐能量。" },
-            "S-L-A-C": { name: "专业园丁小青鱼", desc: "技能驱动，作为引领者，在稳定领域用专业技艺悉心培育。" },
-            "S-L-A-X": { name: "架构师小青鱼", desc: "技能驱动，作为引领者，在稳定领域像执行人一样构建高效体系。" },
-            "S-T-A-C": { name: "匠心专员小青鱼", desc: "技能驱动，作为队友，在稳定领域用专业和关怀追求极致。" },
-            "S-T-A-X": { name: "效能专家小青鱼", desc: "技能驱动，作为队友，在稳定领域专业、高效地优化流程。" },
-            "S-L-E-C": { name: "启迪导师小青鱼", desc: "技能驱动，作为引领者，在探索中用专业知识和关怀启迪他人。" },
-            "S-L-E-X": { name: "战略专家小青鱼", desc: "技能驱动，作为引领者，在探索中像执行人一样制定专业方案。" },
-            "S-T-E-C": { name: "博学助手小青鱼", desc: "技能驱动，作为队友，在探索中用专业知识和关怀支持各方。" },
-            "S-T-E-X": { name: "万能胶小青鱼", desc: "技能驱动，作为队友，在探索中灵活执行，填补各种专业空缺。" }
+            "H-L-A-C": { name: "温情守护型小青鱼", desc: "你以真挚的情感为原点，习惯在志愿服务中主动承担引领角色，用细致的关怀为服务对象带来持久温暖。你是团队中最令人安心的守护者，用时间与耐心构筑信任的桥梁。" },
+            "H-L-A-X": { name: "坚实后盾型小青鱼", desc: "你怀揣热忱之心，在熟悉的志愿服务中扮演组织者角色。注重效率与执行，总能稳妥地完成每一项任务。虽然不常表露情感，却是团队中最值得信赖的支持力量。" },
+            "H-T-A-C": { name: "温暖陪伴型小青鱼", desc: "你因内心的感动而投身服务，更愿意以配合者的身份默默付出。在稳定的服务环境中，你细腻体贴，善于倾听与陪伴。你的存在，本身就是一种温柔的力量。" },
+            "H-T-A-X": { name: "静默耕耘型小青鱼", desc: "你秉持内心的信念，专注于在固定服务中高效完成任务。不追求掌声，却总能以踏实的态度赢得尊重。你是那种在幕后默默发光的小青鱼。" },
+            "H-L-E-C": { name: "爱心传递型小青鱼", desc: "你带着一颗热忱的心，不断探索不同类型的志愿服务，并乐于在其中担任发起人或协调者。你擅长用关怀搭建人与人之间的联结，让温暖在不同角落流动。" },
+            "H-L-E-X": { name: "热血先锋型小青鱼", desc: "你因热爱而行动，勇于尝试新领域并主动承担引领职责。你注重目标与成效，善于在变化中快速打开局面，是开拓志愿服务新可能的先锋者。" },
+            "H-T-E-C": { name: "暖心旅人形小青鱼", desc: "你随着内心的指引，穿梭于多样化的志愿服务中，以配合者的姿态留下温暖的痕迹。你关注每一个个体的需求，用短暂的相遇传递长久的美好。" },
+            "H-T-E-X": { name: "快乐行动派小青鱼", desc: "你因快乐而服务，乐于尝试各类志愿项目并高效配合团队完成任务。你不仅自己享受其中，也用积极能量感染身边的每一个人。" },
+            "S-L-A-C": { name: "专业园丁型小青鱼", desc: "你以专业技能为根基，在固定服务领域中承担组织者角色。你不仅传授知识，更注重以关怀之心陪伴服务对象成长，是值得依靠的“园丁型”志愿者。" },
+            "S-L-A-X": { name: "架构师型小青鱼", desc: "你凭借专业能力，在稳定服务中扮演引领者，并着眼于构建清晰高效的服务流程。你善于系统化地解决问题，是志愿服务中的“隐形引擎”。" },
+            "S-T-A-C": { name: "匠心专员型小青鱼", desc: "你将专业与关怀融为一体，在固定服务点中以配合者的身份追求每一个细节的完善。你相信，真正的专业是技术与温度的结合。" },
+            "S-T-A-X": { name: "效能专家型小青鱼", desc: "你以技能为本，在熟悉的服务场景中专注提升执行效率。你虽不张扬，却总能在流程中找到优化点，是团队中不可或缺的“效能担当”。" },
+            "S-L-E-C": { name: "启迪导师型小青鱼", desc: "你带着专业知识走向多样化的志愿服务，并主动承担引导者角色。你不仅解决问题，更启发他人思考，是知识与温度并重的传播者。" },
+            "S-L-E-X": { name: "战略专家型小青鱼", desc: "你以专业视角审视不同服务领域，并主动制定清晰可行的执行方案。你擅长在复杂项目中找到关键路径，是志愿服务中的“策略大脑”。" },
+            "S-T-E-C": { name: "博学助手型小青鱼", desc: "你凭借丰富的知识背景，灵活支持各类志愿服务，并以配合者的姿态提供专业又贴心的协助。你是团队中知识渊博又谦和的“全能辅助”。" },
+            "S-T-E-X": { name: "万能胶型小青鱼", desc: "你具备多领域技能，能迅速适应不同志愿服务场景，并高效完成各类任务。你就像团队中的“万能胶”，哪里需要，哪里就有你的专业身影。" }
         };
+
+        // 四维简介数据
+        const dimensionInfo = [
+            { name: "服务动机倾向", items: [
+                { key: "H", desc: "情感驱动型（Heart）-“因为被需要，所以我在”" },
+                { key: "S", desc: "技能驱动型（Skill）-“用专业能力创造价值”" }
+            ]},
+            { name: "团队角色倾向", items: [
+                { key: "L", desc: "主动引领型（Leader）-喜欢组织协调" },
+                { key: "T", desc: "积极配合型（Teammate）-喜欢听从安排完成任务" }
+            ]},
+            { name: "服务场景偏好", items: [
+                { key: "A", desc: "稳定深耕型（Anchor）-喜欢固定的服务点和对象" },
+                { key: "E", desc: "多元探索型（Explorer）-喜欢尝试不同类型的服务" }
+            ]},
+            { name: "服务风格", items: [
+                { key: "C", desc: "细致关怀型（Compassion）-注重个体需求和情感交流" },
+                { key: "X", desc: "高效执行型（Executor）-注重任务完成和效率" }
+            ]}
+        ];
 
         // 全局变量
         let currentQuestion = 0;
         let selectedOptions = {};
         let personalityResult = "";
+        let formData = null; // 存储表单数据
+        let letterTextContent = ""; // 存储信件内容用于重新显示
+        let letterGenerated = false; // 标记信件是否已经生成
+        let typingSpeed = 60; // 打字机速度，默认60ms
+        let isAccelerated = false; // 是否加速
 
         // DOM元素
         const welcomeSection = document.getElementById("welcome-section");
         const questionSection = document.getElementById("question-section");
         const achievementSection = document.getElementById("achievement-section");
         const resultSection = document.getElementById("result-section");
+        const letterSection = document.getElementById("letter-section");
+        const loadingOverlay = document.getElementById("loading-overlay");
         
         const startBtn = document.getElementById("start-btn");
         const prevBtn = document.getElementById("prev-btn");
         const nextBtn = document.getElementById("next-btn");
         const submitBtn = document.getElementById("submit-btn");
-        const restartBtn = document.getElementById("restart-btn");
+        const toLetterBtn = document.getElementById("to-letter-btn");
+        const finalRestartBtn = document.getElementById("final-restart-btn");
+        const downloadResultBtn = document.getElementById("download-result-btn");
+        const downloadLetterBtn = document.getElementById("download-letter-btn");
         
         const questionNumber = document.getElementById("question-number");
         const questionText = document.getElementById("question-text");
@@ -674,9 +901,11 @@
         const resultType = document.getElementById("result-type");
         const resultName = document.getElementById("result-name");
         const resultDesc = document.getElementById("result-desc");
-        const infoSummary = document.getElementById("info-summary");
+        const dimensionSummary = document.getElementById("dimension-summary");
+        const letterContent = document.getElementById("letter-content");
         
         const errorMessage = document.getElementById("error-message");
+        const nicknameInput = document.getElementById("nickname");
         const totalHoursInput = document.getElementById("total-hours");
         const startYearInput = document.getElementById("start-year");
 
@@ -728,21 +957,24 @@
             // 统计各维度得分
             for (let i = 0; i < questions.length; i++) {
                 const selectedIndex = selectedOptions[i];
-                const dimension = questions[i].options[selectedIndex].dimension;
-                scores[dimension]++;
+                const dimensions = questions[i].options[selectedIndex].dimension;
+                dimensions.forEach(dim => {
+                    scores[dim]++;
+                });
             }
             
-            // 确定每个维度的倾向
-            const dim1 = scores.H >= scores.S ? "H" : "S";
-            const dim2 = scores.L >= scores.T ? "L" : "T";
-            const dim3 = scores.A >= scores.E ? "A" : "E";
-            const dim4 = scores.C >= scores.X ? "C" : "X";
+            // 确定每个维度的倾向（取得分高的，若相等则默认前者）
+            const dim1 = scores.H >= scores.S ? "H" : "S"; // H/S
+            const dim2 = scores.L >= scores.T ? "L" : "T"; // L/T
+            const dim3 = scores.A >= scores.E ? "A" : "E"; // A/E
+            const dim4 = scores.C >= scores.X ? "C" : "X"; // C/X
             
-            return dim1 + "-" + dim2 + "-" + dim3 + "-" + dim4;
+            return `${dim1}-${dim2}-${dim3}-${dim4}`;
         }
 
         // 表单验证
         function validateForm() {
+            const nickname = nicknameInput.value.trim();
             const hours = totalHoursInput.value.trim();
             const year = startYearInput.value.trim();
             const changes = document.querySelectorAll('input[name="change"]:checked');
@@ -751,6 +983,12 @@
             
             // 清空之前的错误提示
             errorMessage.classList.remove("show");
+            
+            // 验证昵称
+            if (!nickname) {
+                showError("请输入你的志愿者昵称");
+                return false;
+            }
             
             // 验证累计时长
             if (!hours) {
@@ -762,13 +1000,13 @@
                 return false;
             }
             
-            // 验证开始年份
+            // 验证开始年份（修改为2000-2026）
             if (!year) {
                 showError("请填写开始志愿服务的年份");
                 return false;
             }
-            if (parseInt(year) < 2000) {
-                showError("开始志愿服务的年份不能早于2000年");
+            if (parseInt(year) < 2000 || parseInt(year) > 2026) {
+                showError("开始志愿服务的年份需在2000年至2026年之间");
                 return false;
             }
             
@@ -806,6 +1044,7 @@
 
         // 获取表单数据
         function getFormData() {
+            const nickname = nicknameInput.value;
             const hours = totalHoursInput.value;
             const year = startYearInput.value;
             
@@ -819,12 +1058,11 @@
             const nextType = document.querySelector('input[name="next-type"]:checked').value;
             const description = document.querySelector('input[name="description"]:checked').value;
             
-            return { hours, year, changes, nextType, description };
+            return { nickname, hours, year, changes, nextType, description };
         }
 
         // 显示结果
         function showResult() {
-            const formData = getFormData();
             const personality = personalities[personalityResult];
             
             // 设置人格结果
@@ -832,14 +1070,169 @@
             resultName.textContent = personality.name;
             resultDesc.textContent = personality.desc;
             
-            // 设置信息总结
-            infoSummary.innerHTML = `
-                <li>累计服务时长：${formData.hours}小时</li>
-                <li>开始志愿年份：${formData.year}年</li>
-                <li>志愿带来的改变：${formData.changes.join("、")}</li>
-                <li>明年想尝试：${formData.nextType}</li>
-                <li>志愿服务关键词：${formData.description}</li>
-            `;
+            // 渲染四维简介
+            let dimensionHTML = "";
+            dimensionInfo.forEach(dimGroup => {
+                dimensionHTML += `<li><strong>${dimGroup.name}：</strong></li>`;
+                dimGroup.items.forEach(item => {
+                    dimensionHTML += `<li style="padding-left: 30px;">${item.key}. ${item.desc}</li>`;
+                });
+            });
+            dimensionSummary.innerHTML = dimensionHTML;
+        }
+
+        // 生成信件内容（保持信件格式）
+        function generateLetter(formData) {
+            return `亲爱的<span class="highlight-text">${formData.nickname}</span>：
+
+当你收到这封信时，意味着又一年的志愿服务时光被温柔地收纳、整理，成为了你生命中独特的一页。我们想告诉你，你付出的每一刻，都闪闪发光。
+
+回顾过去的一年，志愿服务为你带来了<span class="highlight-text">${formData.changes.join("、")}</span>等珍贵的改变。这些点滴收获，如同星火，不仅照亮了你前行的路，也温暖了我们共同的记忆。
+
+展望新的一年，我们欣喜地看到，你心中已经种下了<span class="highlight-text">${formData.nextType}</span>的种子。这真是一段令人期待的崭新旅程！请带着你的热情与经验出发，我们相信，你一定能在那片新的天地里，继续播撒爱与希望的种子。
+
+如果要用一个词来形容你的志愿服务，那么“<span class="highlight-text">${formData.description}</span>”再贴切不过。这正是你独一无二的色彩，是你留给所有被你所温暖过的人和事的最美印记。
+
+感谢你，亲爱的小青鱼。愿你在未来的日子里，继续游弋在爱的江海里，勇敢，自由，且快乐。让我们一路公益，爱心满洋！
+
+<div class="signature">重庆大学青年志愿者协会</div>`;
+        }
+
+        // 改进的打字机效果（支持HTML标签和换行，添加点击加速功能）
+        function typeWriterEnhanced(text, element, speed = 60) {
+            // 重置元素状态
+            element.innerHTML = "";
+            element.classList.add("typing");
+            
+            // 创建一个临时元素来解析HTML
+            const tempElement = document.createElement('div');
+            tempElement.innerHTML = text;
+            
+            // 获取所有节点（文本节点和元素节点）
+            const nodes = Array.from(tempElement.childNodes);
+            
+            let currentNodeIndex = 0;
+            let currentCharIndex = 0;
+            let currentSpeed = speed;
+            
+            function processNextNode() {
+                if (currentNodeIndex >= nodes.length) {
+                    // 完成所有节点
+                    element.classList.remove("typing");
+                    return;
+                }
+                
+                const node = nodes[currentNodeIndex];
+                
+                if (node.nodeType === Node.TEXT_NODE) {
+                    // 处理文本节点
+                    const textContent = node.textContent;
+                    
+                    if (currentCharIndex < textContent.length) {
+                        // 添加下一个字符
+                        element.innerHTML += textContent.charAt(currentCharIndex);
+                        currentCharIndex++;
+                        setTimeout(processNextNode, currentSpeed);
+                    } else {
+                        // 当前文本节点处理完毕，处理下一个节点
+                        currentNodeIndex++;
+                        currentCharIndex = 0;
+                        setTimeout(processNextNode, 0);
+                    }
+                } else if (node.nodeType === Node.ELEMENT_NODE) {
+                    // 处理元素节点（如 <br> 等）
+                    const tagName = node.tagName.toLowerCase();
+                    
+                    if (tagName === 'br') {
+                        // 换行标签直接添加
+                        element.innerHTML += '<br>';
+                        currentNodeIndex++;
+                        setTimeout(processNextNode, currentSpeed * 2); // 换行时稍作停顿
+                    } else if (tagName === 'div' && node.classList.contains('signature')) {
+                        // 签名样式
+                        element.innerHTML += node.outerHTML;
+                        currentNodeIndex++;
+                        setTimeout(processNextNode, currentSpeed * 5);
+                    } else if (tagName === 'span' && node.classList.contains('highlight-text')) {
+                        // 高亮文本
+                        element.innerHTML += node.outerHTML;
+                        currentNodeIndex++;
+                        setTimeout(processNextNode, currentSpeed * 3);
+                    } else {
+                        // 其他元素标签
+                        const elementHTML = node.outerHTML;
+                        element.innerHTML += elementHTML;
+                        currentNodeIndex++;
+                        setTimeout(processNextNode, currentSpeed * 5);
+                    }
+                } else {
+                    // 其他类型节点，跳过
+                    currentNodeIndex++;
+                    setTimeout(processNextNode, 0);
+                }
+            }
+            
+            // 添加点击加速事件
+            element.addEventListener('click', function() {
+                if (!isAccelerated) {
+                    currentSpeed = 5; // 加速到5ms
+                    isAccelerated = true;
+                }
+            });
+            
+            processNextNode();
+        }
+
+        // 下载图片功能
+        function downloadImage(targetElement, fileName) {
+            // 显示加载提示
+            loadingOverlay.style.display = "flex";
+            
+            // 配置选项，确保文字清晰
+            const options = {
+                quality: 1.0, // 图片质量
+                scale: 2, // 缩放比例，提高清晰度
+                useCORS: true,
+                width: targetElement.offsetWidth,
+                height: targetElement.offsetHeight,
+                // 确保背景颜色正确渲染
+                backgroundColor: targetElement.style.backgroundColor || "white",
+                // 处理字体问题
+                font: "16px 'Microsoft Yahei', sans-serif"
+            };
+            
+            try {
+                // 使用dom-to-image生成图片
+                domtoimage.toBlob(targetElement, options)
+                    .then(function (blob) {
+                        // 隐藏加载提示
+                        loadingOverlay.style.display = "none";
+                        
+                        // 创建下载链接
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = fileName;
+                        document.body.appendChild(a);
+                        a.click();
+                        
+                        // 释放资源
+                        setTimeout(() => {
+                            document.body.removeChild(a);
+                            URL.revokeObjectURL(url);
+                        }, 100);
+                    })
+                    .catch(function (error) {
+                        // 隐藏加载提示
+                        loadingOverlay.style.display = "none";
+                        console.error('生成图片失败:', error);
+                        alert('图片生成失败，请重试！');
+                    });
+            } catch (error) {
+                loadingOverlay.style.display = "none";
+                console.error('下载图片失败:', error);
+                alert('图片下载失败，请重试！');
+            }
         }
 
         // 事件监听
@@ -886,19 +1279,52 @@
                 return;
             }
             
+            // 保存表单数据
+            formData = getFormData();
+            letterGenerated = false; // 重置信件生成状态
+            
             // 显示结果页
             achievementSection.classList.remove("active");
             resultSection.classList.add("active");
             showResult();
         });
 
-        restartBtn.addEventListener("click", () => {
-            // 重置状态
+        toLetterBtn.addEventListener("click", () => {
+            resultSection.classList.remove("active");
+            letterSection.classList.add("active");
+            
+            // 重置打字速度
+            typingSpeed = 60;
+            isAccelerated = false;
+            
+            // 确保表单数据存在
+            if (!formData) {
+                formData = getFormData();
+            }
+            
+            // 如果信件还未生成，先生成内容
+            if (!letterGenerated) {
+                letterTextContent = generateLetter(formData);
+                letterGenerated = true;
+            }
+            
+            // 使用改进的打字机效果显示信件
+            typeWriterEnhanced(letterTextContent, letterContent, typingSpeed);
+        });
+
+        finalRestartBtn.addEventListener("click", () => {
+            // 重置所有状态
             currentQuestion = 0;
             selectedOptions = {};
             personalityResult = "";
+            formData = null;
+            letterTextContent = "";
+            letterGenerated = false;
+            typingSpeed = 60;
+            isAccelerated = false;
             
             // 重置表单
+            nicknameInput.value = "";
             totalHoursInput.value = "";
             startYearInput.value = "";
             document.querySelectorAll('input[type="checkbox"], input[type="radio"]').forEach(el => {
@@ -910,8 +1336,22 @@
             questionError.classList.remove("show");
             
             // 返回欢迎页
+            letterSection.classList.remove("active");
             resultSection.classList.remove("active");
+            achievementSection.classList.remove("active");
             welcomeSection.classList.add("active");
+        });
+
+        // 结果页下载按钮事件
+        downloadResultBtn.addEventListener("click", () => {
+            const fileName = `小青鱼人格测评结果_${formData?.nickname || '未知用户'}.png`;
+            downloadImage(resultSection, fileName);
+        });
+
+        // 信件页下载按钮事件
+        downloadLetterBtn.addEventListener("click", () => {
+            const fileName = `致小青鱼的一封信_${formData?.nickname || '未知用户'}.png`;
+            downloadImage(letterSection, fileName);
         });
     </script>
 </body>
