@@ -55,70 +55,99 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* 欢迎页优化样式 */
+        /* 欢迎页优化样式 - 使用背景图片 */
         .welcome-container {
-            text-align: center;
-            padding: 60px 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 500px;
-        }
-        
-        .welcome-icon {
-            font-size: 80px;
-            margin-bottom: 30px;
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-        
-        .welcome-title {
-            font-size: 32px;
-            color: #FF8C38;
-            margin-bottom: 20px;
-            background: linear-gradient(90deg, #FF8C38, #FFB067);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .welcome-subtitle {
-            font-size: 18px;
-            color: #666;
-            margin-bottom: 40px;
-            max-width: 500px;
-            line-height: 1.8;
-        }
-        
-        .welcome-features {
+            position: relative;
+            width: 100%;
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-        }
-        
-        .welcome-feature {
-            display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 10px;
-            max-width: 120px;
+            padding: 20px;
+            min-height: 80vh;
         }
         
-        .feature-icon {
-            font-size: 30px;
-            color: #FF8C38;
+        .welcome-image-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(255, 140, 56, 0.15);
+            transition: transform 0.3s ease;
         }
         
-        .feature-text {
+        .welcome-image-wrapper:hover {
+            transform: translateY(-5px);
+        }
+        
+        .cover-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+        
+        .start-button-container {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            z-index: 10;
+        }
+        
+        /* 欢迎页装饰元素 */
+        .welcome-decoration {
+            position: absolute;
+            top: 20px;
+            left: 20px;
             font-size: 14px;
-            color: #666;
+            color: #FF8C38;
+            opacity: 0.8;
+        }
+        
+        /* 开始按钮特殊效果 - 修改为圆形并增大 */
+        #start-btn {
+            background: linear-gradient(135deg, #FF8C38, #FFA563);
+            border: none;
+            color: white;
+            width: 120px;      /* 设置固定宽度 */
+            height: 120px;     /* 设置固定高度，与宽度相同形成圆形 */
+            font-size: 20px;   /* 增大字体 */
+            border-radius: 50%;/* 改为圆形 */
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(255, 140, 56, 0.4);
+            position: relative;
+            overflow: hidden;
+            display: flex;     /* 使用flex居中文字 */
+            justify-content: center; /* 水平居中 */
+            align-items: center;     /* 垂直居中 */
+            text-align: center;      /* 文字居中 */
+            line-height: 1.2;        /* 调整行高 */
+            padding: 10px;           /* 内边距 */
+        }
+        
+        #start-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.6s ease;
+        }
+        
+        #start-btn:hover {
+            transform: translateY(-5px) scale(1.05); /* 增加缩放效果 */
+            box-shadow: 0 12px 25px rgba(255, 140, 56, 0.5);
+        }
+        
+        #start-btn:hover::before {
+            left: 100%;
+        }
+        
+        #start-btn:active {
+            transform: translateY(-2px) scale(1.02);
         }
         
         /* 标题样式 */
@@ -243,6 +272,42 @@
             border-radius: 4px;
             transition: width 0.3s ease;
             background: linear-gradient(90deg, #FF8C38, #FFA563);
+        }
+        
+        /* 问卷页左上角图片样式 */
+        .question-section-header {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .corner-image {
+            position: absolute;
+            top: -30px;
+            left: -50px;
+            width: 80px; /* 调整大小确保不影响文字 */
+            height: auto;
+            opacity: 0.8;
+            z-index: 1;
+            transform: translateY(-10px);
+        }
+        
+        /* 新增：问卷页右上角Logo样式 */
+        .header-logo {
+            position: absolute;
+            top: -50px;
+            right: -40px;
+            width: 120px; /* 控制Logo大小，美观且不影响文字 */
+            height: auto;
+            opacity: 0.8;
+            z-index: 1;
+            transform: translateY(-5px);
+        }
+        
+        .question-content {
+            position: relative;
+            z-index: 2;
+            padding-top: 10px;
+            padding-right: 20px; /* 增加右侧内边距，避免文字被Logo遮挡 */
         }
         
         /* 表单样式 */
@@ -488,10 +553,10 @@
             color: #FF8C38;
         }
         
-        /* 高亮文本样式 */
+        /* 高亮文本样式 - 加粗并橙色 */
         .highlight-text {
-            font-weight: bold;
             color: #FF8C38;
+            font-weight: bold;
         }
         
         .signature {
@@ -553,6 +618,21 @@
             font-size: 18px;
             color: #FF8C38;
         }
+        
+        /* 成就页右上角图片样式 */
+        .achievement-header {
+            position: relative;
+        }
+        
+        .human-image {
+            position: absolute;
+            top: 640px;
+            right: -110px;
+            width: 300px; /* 控制图片大小，确保美观 */
+            height: auto;
+            opacity: 1; 
+            z-index: 1;
+        }
     </style>
 </head>
 <body>
@@ -560,149 +640,153 @@
         <!-- 欢迎页（优化版） -->
         <div id="welcome-section" class="section active">
             <div class="welcome-container">
-                <div class="welcome-icon">🐟</div>
-                <h1 class="welcome-title">重庆大学小青🐟人格测评</h1>
-                <p class="welcome-subtitle">探索你的志愿服务特质，找到属于你的志愿者人格，让每一份善意都闪闪发光</p>
-                
-                <div class="welcome-features">
-                    <div class="welcome-feature">
-                        <div class="feature-icon">🧭</div>
-                        <div class="feature-text">精准测评</div>
-                    </div>
-                    <div class="welcome-feature">
-                        <div class="feature-icon">💡</div>
-                        <div class="feature-text">个性分析</div>
-                    </div>
-                    <div class="welcome-feature">
-                        <div class="feature-icon">✉️</div>
-                        <div class="feature-text">专属信件</div>
+                <div class="welcome-image-wrapper">
+                    <img src="cover.png" alt="封面" class="cover-image">
+                    <div class="welcome-decoration">CQU Volunteer Association</div>
+                    <div class="start-button-container">
+                        <button id="start-btn">开始测评</button>
                     </div>
                 </div>
-                
-                <button id="start-btn" class="btn" style="padding: 15px 40px; font-size: 18px;">开始测评</button>
             </div>
         </div>
 
         <!-- 题目页 -->
         <div id="question-section" class="section">
-            <div class="progress">
-                <div id="progress-bar" class="progress-bar" style="width: 10%;"></div>
-            </div>
-            <div id="question-number"></div>
-            <div id="question-text" class="question"></div>
-            
-            <!-- 题目错误提示 -->
-            <div id="question-error" class="question-error">请选择一个选项后继续！</div>
-            
-            <div id="options-container" class="options"></div>
-            <div class="btn-group">
-                <button id="prev-btn" class="btn" disabled>上一题</button>
-                <button id="next-btn" class="btn">下一题</button>
+            <div class="question-section-header">
+                <!-- 添加左上角图片 -->
+                <img src="yu1.png" alt="装饰图片" class="corner-image">
+                
+                <!-- 新增：添加右上角Logo -->
+                <img src="logo.png" alt="Logo" class="header-logo">
+                
+                <div class="question-content">
+                    <div class="progress">
+                        <div id="progress-bar" class="progress-bar" style="width: 10%;"></div>
+                    </div>
+                    <div id="question-number"></div>
+                    <div id="question-text" class="question"></div>
+                    
+                    <!-- 题目错误提示 -->
+                    <div id="question-error" class="question-error">请选择一个选项后继续！</div>
+                    
+                    <div id="options-container" class="options"></div>
+                    <div class="btn-group">
+                        <button id="prev-btn" class="btn" disabled>上一题</button>
+                        <button id="next-btn" class="btn">下一题</button>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- 成就展望页 -->
         <div id="achievement-section" class="section">
-            <h2>成就与展望</h2>
-            
-            <!-- 错误提示 -->
-            <div id="error-message" class="error-message"></div>
-            
-            <div class="form-group">
-                <label for="nickname">志愿者昵称</label>
-                <input type="text" id="nickname" placeholder="请输入你的昵称" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="total-hours">累计志愿服务时长（小时）</label>
-                <input type="number" id="total-hours" placeholder="请输入时长" min="0">
-            </div>
-            
-            <div class="form-group">
-                <label for="start-year">开始志愿服务的年份</label>
-                <input type="number" id="start-year" placeholder="例如：2022" min="2000" max="2026">
-            </div>
-            
-            <div class="form-group">
-                <label>志愿带给你的改变（可多选）</label>
-                <div class="checkbox-group">
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="change1" name="change" value="认识了新朋友">
-                        <label for="change1">认识了新朋友</label>
+            <div class="achievement-header">
+                <!-- 添加human.png图片 -->
+                <img src="human.png" alt="人物装饰" class="human-image">
+                
+                <div class="achievement-content">
+                    <h2>成就与展望</h2>
+                    
+                    <!-- 错误提示 -->
+                    <div id="error-message" class="error-message"></div>
+                    
+                    <div class="form-group">
+                        <label for="nickname">志愿者昵称</label>
+                        <input type="text" id="nickname" placeholder="请输入你的昵称" required>
                     </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="change2" name="change" value="学会了新技能">
-                        <label for="change2">学会了新技能</label>
+                    
+                    <div class="form-group">
+                        <label for="total-hours">累计志愿服务时长（小时）</label>
+                        <input type="number" id="total-hours" placeholder="请输入时长" min="0">
                     </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="change3" name="change" value="更理解社会问题">
-                        <label for="change3">更理解社会问题</label>
+                    
+                    <div class="form-group">
+                        <label for="start-year">开始志愿服务的年份</label>
+                        <input type="number" id="start-year" placeholder="例如：2022" min="2000" max="2026">
                     </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="change4" name="change" value="提升了沟通能力">
-                        <label for="change4">提升了沟通能力</label>
+                    
+                    <div class="form-group">
+                        <label>志愿带给你的改变（可多选）</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="change1" name="change" value="认识了新朋友">
+                                <label for="change1">认识了新朋友</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="change2" name="change" value="学会了新技能">
+                                <label for="change2">学会了新技能</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="change3" name="change" value="更理解社会问题">
+                                <label for="change3">更理解社会问题</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="change4" name="change" value="提升了沟通能力">
+                                <label for="change4">提升了沟通能力</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="change5" name="change" value="增强了责任感">
+                                <label for="change5">增强了责任感</label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="change5" name="change" value="增强了责任感">
-                        <label for="change5">增强了责任感</label>
+                    
+                    <div class="form-group">
+                        <label>明年最想尝试的服务类型</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="type1" name="next-type" value="爱心助老">
+                                <label for="type1">爱心助老</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="type2" name="next-type" value="支教助学">
+                                <label for="type2">支教助学</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="type3" name="next-type" value="赛事服务">
+                                <label for="type3">赛事服务</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="type4" name="next-type" value="环保公益">
+                                <label for="type4">环保公益</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="type5" name="next-type" value="社区服务">
+                                <label for="type5">社区服务</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>用一个词形容你的志愿服务</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="desc1" name="description" value="温暖">
+                                <label for="desc1">温暖</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="desc2" name="description" value="成长">
+                                <label for="desc2">成长</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="desc3" name="description" value="责任">
+                                <label for="desc3">责任</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="desc4" name="description" value="快乐">
+                                <label for="desc4">快乐</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="desc5" name="description" value="价值">
+                                <label for="desc5">价值</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="btn-group" style="justify-content: center;">
+                        <button id="submit-btn" class="btn">查看结果</button>
                     </div>
                 </div>
-            </div>
-            
-            <div class="form-group">
-                <label>明年最想尝试的服务类型</label>
-                <div class="radio-group">
-                    <div class="radio-item">
-                        <input type="radio" id="type1" name="next-type" value="爱心助老">
-                        <label for="type1">爱心助老</label>
-                    </div>
-                    <div class="radio-item">
-                        <input type="radio" id="type2" name="next-type" value="支教助学">
-                        <label for="type2">支教助学</label>
-                    </div>
-                    <div class="radio-item">
-                        <input type="radio" id="type3" name="next-type" value="赛事服务">
-                        <label for="type3">赛事服务</label>
-                    </div>
-                    <div class="radio-item">
-                        <input type="radio" id="type4" name="next-type" value="环保公益">
-                        <label for="type4">环保公益</label>
-                    </div>
-                    <div class="radio-item">
-                        <input type="radio" id="type5" name="next-type" value="社区服务">
-                        <label for="type5">社区服务</label>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label>用一个词形容你的志愿服务</label>
-                <div class="radio-group">
-                    <div class="radio-item">
-                        <input type="radio" id="desc1" name="description" value="温暖">
-                        <label for="desc1">温暖</label>
-                    </div>
-                    <div class="radio-item">
-                        <input type="radio" id="desc2" name="description" value="成长">
-                        <label for="desc2">成长</label>
-                    </div>
-                    <div class="radio-item">
-                        <input type="radio" id="desc3" name="description" value="责任">
-                        <label for="desc3">责任</label>
-                    </div>
-                    <div class="radio-item">
-                        <input type="radio" id="desc4" name="description" value="快乐">
-                        <label for="desc4">快乐</label>
-                    </div>
-                    <div class="radio-item">
-                        <input type="radio" id="desc5" name="description" value="价值">
-                        <label for="desc5">价值</label>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="btn-group" style="justify-content: center;">
-                <button id="submit-btn" class="btn">查看结果</button>
             </div>
         </div>
 
@@ -1154,7 +1238,7 @@
                         currentNodeIndex++;
                         setTimeout(processNextNode, currentSpeed * 5);
                     } else if (tagName === 'span' && node.classList.contains('highlight-text')) {
-                        // 高亮文本
+                        // 高亮文本 - 直接添加整个元素
                         element.innerHTML += node.outerHTML;
                         currentNodeIndex++;
                         setTimeout(processNextNode, currentSpeed * 3);
