@@ -283,39 +283,41 @@
             background: linear-gradient(90deg, #FF8C38, #FFA563);
         }
         
-        /* 问卷页左上角图片样式 */
+        /* 问卷页左上角图片样式 - 改为响应式 */
         .question-section-header {
             position: relative;
             margin-bottom: 20px;
+            padding-top: 60px; /* 为图片预留空间 */
         }
         
         .corner-image {
             position: absolute;
-            top: -30px;
-            left: -50px;
-            width: 80px; /* 调整大小确保不影响文字 */
+            top: 0;        /* 固定在顶部 */
+            left: 0;       /* 固定在左侧 */
+            width: 15vw;      /* 使用vw单位 */
+            max-width: 80px;  /* 设置最大宽度 */
+            min-width: 40px;  /* 设置最小宽度 */
             height: auto;
             opacity: 0.8;
-            z-index: 1;
-            transform: translateY(-10px);
+            z-index: 10; /* 确保在进度条上方 */
         }
         
-        /* 新增：问卷页右上角Logo样式 */
+        /* 新增：问卷页右上角Logo样式 - 改为响应式 */
         .header-logo {
             position: absolute;
-            top: -50px;
-            right: -40px;
-            width: 120px; /* 控制Logo大小，美观且不影响文字 */
+            top: 0;        /* 固定在顶部 */
+            right: 0;      /* 固定在右侧 */
+            width: 20vw;      /* 使用vw单位 */
+            max-width: 120px; /* 设置最大宽度 */
+            min-width: 60px;  /* 设置最小宽度 */
             height: auto;
             opacity: 0.8;
-            z-index: 1;
-            transform: translateY(-5px);
+            z-index: 10; /* 确保在进度条上方 */
         }
         
         .question-content {
             position: relative;
             z-index: 2;
-            padding-top: 10px;
             padding-right: 20px; /* 增加右侧内边距，避免文字被Logo遮挡 */
         }
         
@@ -684,6 +686,17 @@
                 bottom: 0.5vw; 
                 right: 0.5vw;
             }
+            
+            /* 问卷页图片在平板上的调整 */
+            .corner-image {
+                width: 12vw;
+                max-width: 60px;
+            }
+            
+            .header-logo {
+                width: 16vw;
+                max-width: 90px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -710,6 +723,22 @@
             .start-button-container {
                 bottom: 0.5vw; 
                 right: 0.5vw;
+            }
+            
+            /* 问卷页图片在手机上的调整 */
+            .corner-image {
+                width: 10vw;
+                max-width: 50px;
+            }
+            
+            .header-logo {
+                width: 14vw;
+                max-width: 70px;
+            }
+            
+            /* 增加问题内容的内边距，避免文字被图片遮挡 */
+            .question-content {
+                padding-right: 15px;
             }
         }
     </style>
