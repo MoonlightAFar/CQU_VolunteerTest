@@ -89,8 +89,8 @@
         
         .start-button-container {
             position: absolute;
-            bottom: 40px;
-            right: 40px;
+            bottom: 1vw; /* 调整为更小的值，更靠近底部 */
+            right: 1vw;  /* 调整为更小的值，更靠近右侧 */
             z-index: 10;
         }
         
@@ -104,14 +104,20 @@
             opacity: 0.8;
         }
         
-        /* 开始按钮特殊效果 - 修改为圆形并增大 */
+        /* 开始按钮特殊效果 - 优化文字显示 */
         #start-btn {
             background: linear-gradient(135deg, #FF8C38, #FFA563);
             border: none;
             color: white;
-            width: 120px;      /* 设置固定宽度 */
-            height: 120px;     /* 设置固定高度，与宽度相同形成圆形 */
-            font-size: 20px;   /* 增大字体 */
+            width: 18vw;      /* 减小宽度 */
+            height: 18vw;     /* 减小高度 */
+            max-width: 160px; /* 调整最大宽度 */
+            max-height: 160px;/* 调整最大高度 */
+            min-width: 100px; /* 增大最小宽度 */
+            min-height: 100px; /* 增大最小高度 */
+            font-size: calc(1.5vw + 10px); /* 减小字体大小 */
+            font-weight: 500; /* 减轻字重 */
+            letter-spacing: 0; /* 取消字间距 */
             border-radius: 50%;/* 改为圆形 */
             cursor: pointer;
             transition: all 0.3s ease;
@@ -122,8 +128,11 @@
             justify-content: center; /* 水平居中 */
             align-items: center;     /* 垂直居中 */
             text-align: center;      /* 文字居中 */
-            line-height: 1.2;        /* 调整行高 */
-            padding: 10px;           /* 内边距 */
+            line-height: 1.1;        /* 进一步减小行高 */
+            padding: 15px;           /* 调整内边距 */
+            white-space: nowrap;     /* 禁止文字换行 */
+            word-wrap: normal;       /* 取消强制换行 */
+            font-family: "Microsoft Yahei", sans-serif; /* 使用更兼容的字体 */
         }
         
         #start-btn::before {
@@ -619,19 +628,89 @@
             color: #FF8C38;
         }
         
-        /* 成就页右上角图片样式 */
+        /* 成就页中间图片样式 - 修改为响应式定位 */
         .achievement-header {
             position: relative;
+            min-height: 500px; /* 增加最小高度以容纳图片 */
+            overflow: visible; /* 确保图片完全显示 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         
         .human-image {
             position: absolute;
-            top: 640px;
-            right: -110px;
-            width: 300px; /* 控制图片大小，确保美观 */
-            height: auto;
-            opacity: 1; 
+            top: 50%;       /* 垂直居中 */
+            left: 50%;      /* 水平居中 */
+            transform: translate(-50%, -50%); /* 真正居中 */
+            width: auto;    /* 自动宽度 */
+            height: 70%;    /* 设置高度比例，确保完整显示 */
+            max-height: 350px; /* 设置最大高度 */
+            opacity: 0.2;   /* 降低透明度避免遮挡文字 */
             z-index: 1;
+            object-fit: contain; /* 确保图片完整显示 */
+        }
+        
+        .achievement-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            padding: 20px;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .section {
+                padding: 20px;
+            }
+            
+            .human-image {
+                height: 60%;     /* 在平板上调整高度 */
+                max-height: 280px;
+                opacity: 0.15;
+            }
+            
+            #start-btn {
+                font-size: calc(2.5vw + 10px); /* 进一步减小字体 */
+                width: 20vw;
+                height: 20vw;
+                min-width: 90px;
+                min-height: 90px;
+                padding: 10px;
+                line-height: 1.0;
+            }
+            
+            .start-button-container {
+                bottom: 0.5vw; 
+                right: 0.5vw;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .human-image {
+                height: 50%;     /* 在手机上调整高度 */
+                max-height: 220px;
+                opacity: 0.1;
+            }
+            
+            .achievement-content {
+                padding: 15px;
+            }
+            
+            #start-btn {
+                font-size: calc(3vw + 8px); /* 手机上进一步减小字体 */
+                width: 22vw;
+                height: 22vw;
+                min-width: 80px;
+                min-height: 80px;
+                padding: 8px;
+                line-height: 1.0;
+            }
+            
+            .start-button-container {
+                bottom: 0.5vw; 
+                right: 0.5vw;
+            }
         }
     </style>
 </head>
