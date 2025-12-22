@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>重庆大学小青🐟人格测评</title>
-    <!-- 引入 dom-to-image 库（CDN） -->
     <script src="https://cdn.jsdelivr.net/npm/dom-to-image@2.6.0/dist/dom-to-image.min.js"></script>
     <style>
         /* 全局样式 */
@@ -55,84 +54,81 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* 欢迎页优化样式 - 使用背景图片 */
+        /* --- 封面页深度优化样式 --- */
+        #welcome-section {
+            padding: 0; /* 去掉封面页的容器内边距 */
+            background: none;
+            overflow: hidden;
+            border-radius: 20px; /* 保持与容器一致的圆角 */
+        }
+
         .welcome-container {
             position: relative;
             width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            min-height: 80vh;
+            display: block; /* 改为块级展示 */
+            padding: 0;
+            min-height: auto;
         }
         
         .welcome-image-wrapper {
             position: relative;
             width: 100%;
-            max-width: 600px;
-            border-radius: 15px;
+            max-width: none; /* 移除最大宽度限制，由外层container控制 */
+            border-radius: 0; /* 封面内部图片不设置独立圆角 */
             overflow: hidden;
-            box-shadow: 0 8px 25px rgba(255, 140, 56, 0.15);
-            transition: transform 0.3s ease;
-        }
-        
-        .welcome-image-wrapper:hover {
-            transform: translateY(-5px);
+            box-shadow: none; /* 移除内部阴影 */
+            transition: none;
         }
         
         .cover-image {
             width: 100%;
             height: auto;
             display: block;
-            object-fit: cover;
+            object-fit: contain;
         }
         
         .start-button-container {
             position: absolute;
-            bottom: 1vw; /* 调整为更小的值，更靠近底部 */
-            right: 1vw;  /* 调整为更小的值，更靠近右侧 */
+            bottom: 5%; /* 距离图片底部5% */
+            right: 5%;  /* 距离图片右侧5% */
             z-index: 10;
         }
         
-        /* 欢迎页装饰元素 */
-        .welcome-decoration {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 14px;
-            color: #FF8C38;
-            opacity: 0.8;
-        }
-        
-        /* 开始按钮特殊效果 - 优化文字显示 */
         #start-btn {
             background: linear-gradient(135deg, #FF8C38, #FFA563);
             border: none;
             color: white;
-            width: 18vw;      /* 减小宽度 */
-            height: 18vw;     /* 减小高度 */
-            max-width: 160px; /* 调整最大宽度 */
-            max-height: 160px;/* 调整最大高度 */
-            min-width: 100px; /* 增大最小宽度 */
-            min-height: 100px; /* 增大最小高度 */
-            font-size: calc(1.5vw + 10px); /* 减小字体大小 */
-            font-weight: 500; /* 减轻字重 */
-            letter-spacing: 0; /* 取消字间距 */
-            border-radius: 50%;/* 改为圆形 */
+            /* 响应式尺寸设计 */
+            width: 120px;
+            height: 120px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 50%;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(255, 140, 56, 0.4);
-            position: relative;
-            overflow: hidden;
-            display: flex;     /* 使用flex居中文字 */
-            justify-content: center; /* 水平居中 */
-            align-items: center;     /* 垂直居中 */
-            text-align: center;      /* 文字居中 */
-            line-height: 1.1;        /* 进一步减小行高 */
-            padding: 15px;           /* 调整内边距 */
-            white-space: nowrap;     /* 禁止文字换行 */
-            word-wrap: normal;       /* 取消强制换行 */
-            font-family: "Microsoft Yahei", sans-serif; /* 使用更兼容的字体 */
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 20px rgba(255, 140, 56, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            white-space: nowrap;
+            line-height: 1;
+            padding: 10px;
+            letter-spacing: 1px;
+        }
+
+        /* 欢迎页装饰文字 - 移到图片上方，增加可读性 */
+        .welcome-decoration {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            font-size: 12px;
+            color: white;
+            background: rgba(255, 140, 56, 0.7);
+            padding: 4px 12px;
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+            pointer-events: none;
         }
         
         #start-btn::before {
@@ -142,13 +138,13 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
             transition: all 0.6s ease;
         }
         
         #start-btn:hover {
-            transform: translateY(-5px) scale(1.05); /* 增加缩放效果 */
-            box-shadow: 0 12px 25px rgba(255, 140, 56, 0.5);
+            transform: scale(1.1);
+            box-shadow: 0 12px 25px rgba(255, 140, 56, 0.6);
         }
         
         #start-btn:hover::before {
@@ -156,8 +152,9 @@
         }
         
         #start-btn:active {
-            transform: translateY(-2px) scale(1.02);
+            transform: scale(0.95);
         }
+        /* --- 封面页优化结束 --- */
         
         /* 标题样式 */
         h1 {
@@ -211,6 +208,8 @@
             display: flex;
             justify-content: space-between;
             margin-top: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
         
         /* 下载按钮特殊样式 */
@@ -659,6 +658,65 @@
             width: 100%;
             padding: 20px;
         }
+
+        /* 联系页样式 - 新增 */
+        .contact-content {
+            padding: 30px;
+            background: linear-gradient(135deg, #FFF5EB, #FFFAF2);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(255, 140, 56, 0.08);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .contact-item {
+            margin-bottom: 30px;
+        }
+        
+        .contact-title {
+            font-size: 22px;
+            color: #FF8C38;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .qrcode-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(255, 140, 56, 0.1);
+            max-width: 350px;
+            margin: 0 auto;
+        }
+        
+        .qrcode-img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 10px;
+            object-fit: contain;
+        }
+        
+        .contact-text {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #333;
+        }
+        
+        .email-link {
+            color: #FF8C38;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .email-link:hover {
+            color: #FF7A18;
+            text-decoration: underline;
+        }
         
         /* 响应式调整 */
         @media (max-width: 768px) {
@@ -666,25 +724,20 @@
                 padding: 20px;
             }
             
+            #welcome-section {
+                padding: 0;
+            }
+
+            #start-btn {
+                width: 100px;
+                height: 100px;
+                font-size: 16px;
+            }
+
             .human-image {
                 height: 60%;     /* 在平板上调整高度 */
                 max-height: 280px;
                 opacity: 0.15;
-            }
-            
-            #start-btn {
-                font-size: calc(2.5vw + 10px); /* 进一步减小字体 */
-                width: 20vw;
-                height: 20vw;
-                min-width: 90px;
-                min-height: 90px;
-                padding: 10px;
-                line-height: 1.0;
-            }
-            
-            .start-button-container {
-                bottom: 0.5vw; 
-                right: 0.5vw;
             }
             
             /* 问卷页图片在平板上的调整 */
@@ -696,6 +749,24 @@
             .header-logo {
                 width: 16vw;
                 max-width: 90px;
+            }
+
+            /* 联系页平板响应式 */
+            .contact-content {
+                padding: 20px;
+            }
+            
+            .qrcode-container {
+                max-width: 280px;
+                padding: 15px;
+            }
+            
+            .qrcode-img {
+                max-width: 250px;
+            }
+            
+            .contact-text {
+                font-size: 16px;
             }
         }
         
@@ -711,18 +782,10 @@
             }
             
             #start-btn {
-                font-size: calc(3vw + 8px); /* 手机上进一步减小字体 */
-                width: 22vw;
-                height: 22vw;
-                min-width: 80px;
-                min-height: 80px;
-                padding: 8px;
-                line-height: 1.0;
-            }
-            
-            .start-button-container {
-                bottom: 0.5vw; 
-                right: 0.5vw;
+                width: 90px;
+                height: 90px;
+                font-size: 14px;
+                padding: 5px;
             }
             
             /* 问卷页图片在手机上的调整 */
@@ -740,12 +803,25 @@
             .question-content {
                 padding-right: 15px;
             }
+
+            /* 联系页手机响应式 */
+            .qrcode-container {
+                max-width: 220px;
+                padding: 10px;
+            }
+            
+            .qrcode-img {
+                max-width: 200px;
+            }
+            
+            .contact-text {
+                font-size: 15px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- 欢迎页（优化版） -->
         <div id="welcome-section" class="section active">
             <div class="welcome-container">
                 <div class="welcome-image-wrapper">
@@ -758,13 +834,10 @@
             </div>
         </div>
 
-        <!-- 题目页 -->
         <div id="question-section" class="section">
             <div class="question-section-header">
-                <!-- 添加左上角图片 -->
                 <img src="yu1.png" alt="装饰图片" class="corner-image">
                 
-                <!-- 新增：添加右上角Logo -->
                 <img src="logo.png" alt="Logo" class="header-logo">
                 
                 <div class="question-content">
@@ -774,7 +847,6 @@
                     <div id="question-number"></div>
                     <div id="question-text" class="question"></div>
                     
-                    <!-- 题目错误提示 -->
                     <div id="question-error" class="question-error">请选择一个选项后继续！</div>
                     
                     <div id="options-container" class="options"></div>
@@ -786,16 +858,13 @@
             </div>
         </div>
 
-        <!-- 成就展望页 -->
         <div id="achievement-section" class="section">
             <div class="achievement-header">
-                <!-- 添加human.png图片 -->
                 <img src="human.png" alt="人物装饰" class="human-image">
                 
                 <div class="achievement-content">
                     <h2>成就与展望</h2>
                     
-                    <!-- 错误提示 -->
                     <div id="error-message" class="error-message"></div>
                     
                     <div class="form-group">
@@ -898,7 +967,6 @@
             </div>
         </div>
 
-        <!-- 总结页（移除志愿档案） -->
         <div id="result-section" class="section screenshot-target">
             <div class="result-header">
                 <h1>你的志愿者人格</h1>
@@ -916,27 +984,48 @@
             </div>
             
             <div class="result-footer">
-                <!-- 添加下载按钮 -->
                 <button id="download-result-btn" class="btn download-btn">下载结果图片</button>
                 <button id="to-letter-btn" class="btn">致小青鱼的一封信</button>
             </div>
         </div>
 
-        <!-- 信件页 -->
         <div id="letter-section" class="section screenshot-target">
             <div class="result-header">
                 <h1>致小青鱼的一封信</h1>
             </div>
             <div class="letter-content" id="letter-content"></div>
             <div class="btn-group" style="justify-content: center;">
-                <!-- 添加下载按钮 -->
                 <button id="download-letter-btn" class="btn download-btn">下载信件图片</button>
+                <button id="to-contact-btn" class="btn">联系我们</button> <!-- 新增联系我们按钮 -->
                 <button id="final-restart-btn" class="btn">重新测评</button>
+            </div>
+        </div>
+
+        <!-- 新增联系页 section -->
+        <div id="contact-section" class="section screenshot-target">
+            <div class="result-header">
+                <h1>联系我们</h1>
+            </div>
+            <div class="contact-content">
+                <div class="contact-item">
+                    <h3 class="contact-title">关注青协，我们一直在你身边</h3>
+                    <div class="qrcode-container">
+                        <img src="end.png" alt="青志重大公众号" class="qrcode-img">
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <p class="contact-text">2025重庆大学志愿者交流群群号：<span class="highlight-text">975788322</span></p>
+                </div>
+                <div class="contact-item">
+                    <p class="contact-text">作者邮箱：<a href="mailto:luohaowencqu@foxmail.com" class="email-link">luohaowencqu@foxmail.com</a></p>
+                </div>
+            </div>
+            <div class="btn-group" style="justify-content: center;">
+                <button id="back-to-letter-btn" class="btn">返回信件</button>
             </div>
         </div>
     </div>
 
-    <!-- 加载提示 -->
     <div id="loading-overlay" class="loading-overlay">
         <div class="spinner"></div>
         <div class="loading-text">正在生成图片，请稍候...</div>
@@ -1073,6 +1162,7 @@
         const achievementSection = document.getElementById("achievement-section");
         const resultSection = document.getElementById("result-section");
         const letterSection = document.getElementById("letter-section");
+        const contactSection = document.getElementById("contact-section"); // 新增联系页元素
         const loadingOverlay = document.getElementById("loading-overlay");
         
         const startBtn = document.getElementById("start-btn");
@@ -1083,6 +1173,8 @@
         const finalRestartBtn = document.getElementById("final-restart-btn");
         const downloadResultBtn = document.getElementById("download-result-btn");
         const downloadLetterBtn = document.getElementById("download-letter-btn");
+        const toContactBtn = document.getElementById("to-contact-btn"); // 新增联系我们按钮
+        const backToLetterBtn = document.getElementById("back-to-letter-btn"); // 新增返回信件按钮
         
         const questionNumber = document.getElementById("question-number");
         const questionText = document.getElementById("question-text");
@@ -1427,7 +1519,7 @@
             }
         }
 
-        // 事件监听
+               // 事件监听
         startBtn.addEventListener("click", () => {
             welcomeSection.classList.remove("active");
             questionSection.classList.add("active");
@@ -1504,6 +1596,18 @@
             typeWriterEnhanced(letterTextContent, letterContent, typingSpeed);
         });
 
+        // 新增：联系我们按钮点击事件
+        toContactBtn.addEventListener("click", () => {
+            letterSection.classList.remove("active");
+            contactSection.classList.add("active");
+        });
+
+        // 新增：返回信件按钮点击事件
+        backToLetterBtn.addEventListener("click", () => {
+            contactSection.classList.remove("active");
+            letterSection.classList.add("active");
+        });
+
         finalRestartBtn.addEventListener("click", () => {
             // 重置所有状态
             currentQuestion = 0;
@@ -1527,8 +1631,9 @@
             errorMessage.classList.remove("show");
             questionError.classList.remove("show");
             
-            // 返回欢迎页
+            // 返回欢迎页（同时隐藏联系页）
             letterSection.classList.remove("active");
+            contactSection.classList.remove("active");
             resultSection.classList.remove("active");
             achievementSection.classList.remove("active");
             welcomeSection.classList.add("active");
