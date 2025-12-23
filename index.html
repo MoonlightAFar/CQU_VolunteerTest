@@ -501,6 +501,16 @@
             color: #555;
         }
         
+        /* 新增提示语样式 */
+        .result-tips {
+            text-align: center;
+            padding: 20px 30px;
+            margin: 20px 0;
+            color: #666;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+        
         .result-footer {
             text-align: center;
             margin-top: 40px;
@@ -768,6 +778,12 @@
             .contact-text {
                 font-size: 16px;
             }
+            
+            /* 提示语响应式 */
+            .result-tips {
+                padding: 15px 20px;
+                font-size: 15px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -816,6 +832,12 @@
             
             .contact-text {
                 font-size: 15px;
+            }
+            
+            /* 提示语响应式 */
+            .result-tips {
+                padding: 10px 15px;
+                font-size: 14px;
             }
         }
     </style>
@@ -981,6 +1003,13 @@
             <div class="info-card">
                 <h2>四维简介</h2>
                 <ul id="dimension-summary" class="info-list"></ul>
+            </div>
+            
+            <!-- 新增的提示语区域 -->
+            <div class="result-tips">
+                测试结果仅供参考，专属于你的独一无二的小青鱼人格<br>
+                正等着你在志愿活动中发掘<br>
+                期待在志愿现场看到闪闪发光的你！
             </div>
             
             <div class="result-footer">
@@ -1653,4 +1682,3 @@
     </script>
 </body>
 </html>
-
