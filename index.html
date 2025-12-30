@@ -730,6 +730,9 @@
         
         /* 响应式调整 */
         @media (max-width: 768px) {
+            .question {
+                font-size: 18px; /* 平板设备上的题目字号 */
+            }
             .section {
                 padding: 20px;
             }
@@ -787,6 +790,9 @@
         }
         
         @media (max-width: 480px) {
+            .question {
+                font-size: 16px; /* 手机设备上的题目字号 */
+            }           
             .human-image {
                 height: 50%;     /* 在手机上调整高度 */
                 max-height: 220px;
@@ -1007,13 +1013,13 @@
             
             <!-- 新增的提示语区域 -->
             <div class="result-tips">
-                测试结果仅供参考，专属于你的独一无二的小青鱼人格<br>
-                正等着你在志愿活动中发掘<br>
-                期待在志愿现场看到闪闪发光的你！
+                测试结果仅供参考<br>
+                专属于你的独一无二的小青鱼人格<br>
+                正等着你在志愿活动中发掘！<br>
             </div>
             
             <div class="result-footer">
-                <button id="download-result-btn" class="btn download-btn">下载结果图片</button>
+                <button id="download-result-btn" class="btn download-btn">保存测试结果</button>
                 <button id="to-letter-btn" class="btn">致小青鱼的一封信</button>
             </div>
         </div>
@@ -1024,7 +1030,7 @@
             </div>
             <div class="letter-content" id="letter-content"></div>
             <div class="btn-group" style="justify-content: center;">
-                <button id="download-letter-btn" class="btn download-btn">下载信件图片</button>
+                <button id="download-letter-btn" class="btn download-btn">保存信件</button>
                 <button id="to-contact-btn" class="btn">联系我们</button> <!-- 新增联系我们按钮 -->
                 <button id="final-restart-btn" class="btn">重新测评</button>
             </div>
@@ -1064,73 +1070,73 @@
         // 题目数据
         const questions = [
             {
-                text: "到达志愿服务点后，你发现活动异常火爆，工作人员人手不足，需要人临时负责分发物资。此时负责人暂不在场，你会：",
+                text: "志愿服务中分发物资的人手不足，负责人暂不在场，你会：",
                 options: [
-                    { text: "A. 立即上前，主动梳理流程、组织队伍分发物资。", dimension: ["L", "X", "S"] },
-                    { text: "B. 先做力所能及的事，后续听从安排，被指派在哪里就在哪里帮忙。", dimension: ["T", "C", "H"] }
+                    { text: "A. 主动组织队伍分发物资", dimension: ["L", "X", "S"] },
+                    { text: "B. 等待安排，服从后续统一调配", dimension: ["T", "C", "H"] }
                 ]
             },
             {
-                text: "由于精力有限，本学期以下两种志愿活动模式你只能选择一种。在所获志愿时长相等的情况下，你偏向于选择：",
+                text: "若所获志愿时长相等，以下两种模式你偏向于：",
                 options: [
-                    { text: "A. 选择长期稳定的志愿活动，如女生安心计划、蓝信封等。", dimension: ["A", "C", "H"] },
-                    { text: "B. 时刻关注青协志愿群与QQ频道，争取多样的志愿体验。", dimension: ["E", "X", "S"] }
+                    { text: "A. 长期稳定的志愿活动，如蓝信封等", dimension: ["A", "C", "H"] },
+                    { text: "B. 更关注青协志愿群与频道，体验多样活动", dimension: ["E", "X", "S"] }
                 ]
             },
             {
-                text: "活动开展前，你们志愿小组需要写一个服务方案。在组内暂未确定分工时，你倾向于：",
+                text: "3.活动开展前，志愿小组需提交服务方案，你会：",
                 options: [
-                    { text: "A. 主动提出框架、分工、推进时间表，从整体把握方向与任务。", dimension: ["L", "X", "S"] },
-                    { text: "B. 根据别人拟定的方案提供补充意见，细致完成实践内容。", dimension: ["T", "C", "H"] }
+                    { text: "A. 主动安排流程和分工，推进工作", dimension: ["L", "X", "S"] },
+                    { text: "B. 根据他人的方案提供补充意见", dimension: ["T", "C", "H"] }
                 ]
             },
             {
-                text: "由于时间冲突，以下两种志愿活动你只能选择一种进行体验，你更喜欢：",
+                text: "由于时间冲突，两种志愿活动你只能选择一种，你更喜欢：",
                 options: [
-                    { text: "A.志愿过程中需要持续提供服务，需求较为集中的志愿活动，如一对一陪伴读书、聊天、心理慰藉等。", dimension: ["A", "C", "H"] },
-                    { text: "B.志愿过程中节奏快，需求丰富多变的活动，如大型赛事志愿、展会志愿等。", dimension: ["E", "X", "S"] }
+                    { text: "A.持续服务、相对集中的活动，如一对一陪伴读书等", dimension: ["A", "C", "H"] },
+                    { text: "B.节奏快、内容丰富的活动，如重马等大型赛事", dimension: ["E", "X", "S"] }
                 ]
             },
             {
                 text: "当团队内部出现意见不统一，你通常会：",
                 options: [
-                    { text: "A. 先试图整合各方意见，提出一个大家都能接受的方案。", dimension: ["L", "C", "H"] },
-                    { text: "B. 参与讨论，尊重团队决策，明确目标后迅速执行自己负责的部分。", dimension: ["T", "X", "S"] }
+                    { text: "A. 主动整合，提出方案", dimension: ["L", "C", "H"] },
+                    { text: "B. 等待决策，细致执行", dimension: ["T", "X", "S"] }
                 ]
             },
             {
-                text: "在以下两项中，你更享受哪种志愿活动带给你的成就感？",
+                text: "以下哪种志愿活动带给你的成就感更高？",
                 options: [
-                    { text: "A. 服务对象对你表达的信任与感谢，比如一句“谢谢你今天来，我特别温暖和高兴”。", dimension: ["H", "C", "A"] },
-                    { text: "B. 来自项目顺利完成、流程优化、解决了困难，如“因为你，团队工作效率提高了”。", dimension: ["S", "X", "E"] }
+                    { text: "A. 服务对象对你表达的信任与感谢，如“谢谢你今天来，我特别温暖和高兴”", dimension: ["H", "C", "A"] },
+                    { text: "B. 项目顺利完成、困难解决，如“因为你，团队工作效率提高了”", dimension: ["S", "X", "E"] }
                 ]
             },
             {
-                text: "当一个新活动需要志愿者，你更可能因为哪种理由报名？",
+                text: "7.你更可能因为哪种理由报名志愿活动？",
                 options: [
-                    { text: "A. 想帮助特定人群、因为“觉得他们需要你”。", dimension: ["H", "C"] },
-                    { text: "B. 想尝试新任务、提升技能，比如学习新的登记系统。", dimension: ["S", "X", "E"] }
+                    { text: "A. 想帮助特定人群、觉得他们需要你", dimension: ["H", "C"] },
+                    { text: "B. 想提升技能，比如学习新的知识", dimension: ["S", "X", "E"] }
                 ]
             },
             {
-                text: "如果你被安排到很需要耐心的志愿任务（如逐个安抚情绪紧张的家属），你的第一反应是：",
+                text: "面对安抚病人家属等需要耐心的任务，你第一反应是：",
                 options: [
-                    { text: "A. 觉得有意义、有把握，愿意慢慢沟通，安抚并陪伴他们。", dimension: ["C", "H", "A"] },
-                    { text: "B. 更希望被安排到流程类、效率更重要的岗位，如登记、调度。", dimension: ["X", "S", "E"] }
+                    { text: "A. 主动承担这类任务，觉得有价值且有信心做好", dimension: ["C", "H", "A"] },
+                    { text: "B. 更愿意承担流程化任务，比如信息登记、物资整理", dimension: ["X", "S", "E"] }
                 ]
             },
             {
-                text: "在志愿团队中，你最自然展现的状态是：",
+                text: "在志愿团队中，你倾向于：",
                 options: [
-                    { text: "A. 主动关注队友情绪、关心是否有人需要帮助或协调。", dimension: ["C", "L", "H"] },
-                    { text: "B. 负责推动工作节奏，确保任务按时按量完成。", dimension: ["X", "S", "T"] }
+                    { text: "A. 关注队友情绪、关心是否有人需要帮助", dimension: ["C", "L", "H"] },
+                    { text: "B. 负责推动工作节奏，确保任务完成", dimension: ["X", "S", "T"] }
                 ]
             },
             {
-                text: "当志愿项目需要选出一人长期负责联络及事务管理，你会：",
+                text: "当志愿项目需要选出一人长期负责，你会：",
                 options: [
-                    { text: "A. 愿意担任此类核心岗位，负责沟通协调和长期跟进。", dimension: ["L", "A", "H"] },
-                    { text: "B. 更希望按阶段参与项目，完成清晰的具体任务后继续探索下一个项目。", dimension: ["T", "E", "S", "X"] }
+                    { text: "A. 愿意担任此类核心岗位，长期跟进", dimension: ["L", "A", "H"] },
+                    { text: "B. 希望按阶段参与项目，一步步来", dimension: ["T", "E", "S", "X"] }
                 ]
             }
         ];
@@ -1398,13 +1404,13 @@
         function generateLetter(formData) {
             return `亲爱的<span class="highlight-text">${formData.nickname}</span>：
 
-当你收到这封信时，意味着又一年的志愿服务时光被温柔地收纳、整理，成为了你生命中独特的一页。我们想告诉你，你付出的每一刻，都闪闪发光。
+当你收到这封信时，意味着又一年的志愿服务时光被温柔地收纳、整理，成为了你生命中独特的一页。
 
-回顾过去的一年，志愿服务为你带来了<span class="highlight-text">${formData.changes.join("、")}</span>等珍贵的改变。这些点滴收获，如同星火，不仅照亮了你前行的路，也温暖了我们共同的记忆。
+回顾过去的一年，志愿服务为你带来了<span class="highlight-text">${formData.changes.join("、")}</span>等珍贵的改变。这些收获如星火，照亮前路，温暖记忆。
 
-展望新的一年，我们欣喜地看到，你心中已经种下了<span class="highlight-text">${formData.nextType}</span>的种子。这真是一段令人期待的崭新旅程！请带着你的热情与经验出发，我们相信，你一定能在那片新的天地里，继续播撒爱与希望的种子。
+展望新的一年，我们欣喜地看到，你心中已经种下了<span class="highlight-text">${formData.nextType}</span>的种子。请带着你的热情与经验出发，我们相信，你定能在新的天地继续播撒爱与希望。
 
-如果要用一个词来形容你的志愿服务，那么“<span class="highlight-text">${formData.description}</span>”再贴切不过。这正是你独一无二的色彩，是你留给所有被你所温暖过的人和事的最美印记。
+如果要用一个词来形容你的志愿服务，那么“<span class="highlight-text">${formData.description}</span>”再贴切不过。这是你的独特色彩，也是留给世界最美的印记。
 
 感谢你，亲爱的小青鱼。愿你在未来的日子里，继续游弋在爱的江海里，勇敢，自由，且快乐。让我们一路公益，爱心满洋！
 
